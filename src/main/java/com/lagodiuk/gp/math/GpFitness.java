@@ -18,7 +18,9 @@ public class GpFitness implements Fitness<GpGene, Double> {
 			// double target = ( i + 100 ) * ( i - 100 );
 			// double target = i + 6;
 
-			double target = (Math.cos((i * Math.PI) / 10) * 10) + i;
+			// double target = (Math.cos((i * Math.PI) / 10) * 10) + i;
+			// (2)^(SIN(A2*5)*3)+A2
+			double target = Math.pow(2, Math.sin(i * 5) * 3) + i;
 
 			double x = target - gene.getSyntaxTree().eval(gene.getContext());
 
