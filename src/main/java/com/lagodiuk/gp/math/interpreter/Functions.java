@@ -20,7 +20,7 @@ public enum Functions implements Function {
 
 		@Override
 		public List<Double> getCoefficients(Expression expression) {
-			return expression.getCoefficients().subList(0, this.coefficientsCount);
+			return expression.getCoefficientsOfNode().subList(0, this.coefficientsCount);
 		}
 
 		@Override
@@ -38,12 +38,12 @@ public enum Functions implements Function {
 
 		@Override
 		public double eval(Expression expression, Context context) {
-			return expression.getCoefficients().get(0);
+			return expression.getCoefficientsOfNode().get(0);
 		}
 
 		@Override
 		public String print(Expression expression, Context context) {
-			double retVal = expression.getCoefficients().get(0);
+			double retVal = expression.getCoefficientsOfNode().get(0);
 			String retStr = null;
 			if (retVal < 0) {
 				retStr = "(" + retVal + ")";
@@ -93,7 +93,7 @@ public enum Functions implements Function {
 
 		@Override
 		public double eval(Expression expression, Context context) {
-			return context.lookup(expression.getVariable());
+			return context.lookupVariable(expression.getVariable());
 		}
 
 		@Override

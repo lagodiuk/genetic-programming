@@ -34,11 +34,14 @@ public class Context {
 				this.terminalFunctions.add(f);
 			}
 		}
+		if (this.terminalFunctions.isEmpty()) {
+			throw new IllegalArgumentException("At least one terminal function must be defined");
+		}
 
 		Collections.shuffle(this.allFunctions);
 	}
 
-	public double lookup(String variable) {
+	public double lookupVariable(String variable) {
 		return this.variables.get(variable);
 	}
 
@@ -54,16 +57,12 @@ public class Context {
 		this.variables.clear();
 	}
 
-	public Function getRandomFunction_old() {
-		int indx = this.random.nextInt(this.allFunctions.size());
-		return this.allFunctions.get(indx);
-	}
-
 	public Function getRandomFunction() {
 		if (this.nextRndFunctionIndx >= this.allFunctions.size()) {
 			this.nextRndFunctionIndx = 0;
 			Collections.shuffle(this.allFunctions);
 		}
+		// round-robin like selection
 		return this.allFunctions.get(this.nextRndFunctionIndx++);
 	}
 
@@ -71,9 +70,12 @@ public class Context {
 		while (true) {
 			int indx = this.random.nextInt(this.terminalFunctions.size());
 			Function f = this.terminalFunctions.get(indx);
+
 			if ((!this.hasVariables()) && (f.isVariable())) {
+				// if context doesn't contain variables
 				continue;
 			}
+
 			return f;
 		}
 	}
@@ -90,13 +92,10 @@ public class Context {
 	}
 
 	public double getRandomValue() {
-		// return Math.random() * ( maxValue - minValue ) + minValue;
 		return (this.random.nextGaussian() * (this.maxValue - this.minValue)) + this.minValue;
 	}
 
 	public double getRandomMutationValue() {
-		// return Math.random() * ( maxMutationValue - minMutationValue ) +
-		// minMutationValue;
 		return (this.random.nextGaussian() * (this.maxMutationValue - this.minMutationValue)) + this.minMutationValue;
 	}
 

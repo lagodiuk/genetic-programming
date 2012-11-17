@@ -31,8 +31,9 @@ public class Expression implements Cloneable {
 		return this.childs;
 	}
 
-	public void setChilds(List<Expression> childs) {
+	public Expression setChilds(List<Expression> childs) {
 		this.childs = childs;
+		return this;
 	}
 
 	public void addChild(Expression child) {
@@ -43,12 +44,13 @@ public class Expression implements Cloneable {
 		this.childs.clear();
 	}
 
-	public List<Double> getCoefficients() {
+	public List<Double> getCoefficientsOfNode() {
 		return this.coefficients;
 	}
 
-	public void setCoefficients(List<Double> coefficients) {
+	public Expression setCoefficientsOfNode(List<Double> coefficients) {
 		this.coefficients = coefficients;
+		return this;
 	}
 
 	public void addCoefficient(double coefficient) {
@@ -65,8 +67,9 @@ public class Expression implements Cloneable {
 		return this.variable;
 	}
 
-	public void setVariable(String variable) {
+	public Expression setVariable(String variable) {
 		this.variable = variable;
+		return this;
 	}
 
 	public Function getFunction() {
@@ -126,20 +129,14 @@ public class Expression implements Cloneable {
 
 	public List<Expression> getAllNodesAsList() {
 		List<Expression> nodes = new LinkedList<Expression>();
-		// this.getAllNodesTopologicallySorted( nodes );
-		this.getAllNodesWidthSearch(nodes);
+		this.getAllNodesBreadthFirstSearch(nodes);
 		return nodes;
 	}
 
-	// private void getAllNodesTopologicallySorted( List<Expression> nodesList )
-	// {
-	// nodesList.add( this );
-	// for ( Expression child : this.childs ) {
-	// child.getAllNodesTopologicallySorted( nodesList );
-	// }
-	// }
-
-	private void getAllNodesWidthSearch(List<Expression> nodesList) {
+	/**
+	 * non-recursive Breadth-first iteration over all node of syntax tree
+	 */
+	private void getAllNodesBreadthFirstSearch(List<Expression> nodesList) {
 		int indx = 0;
 		nodesList.add(this);
 		while (true) {

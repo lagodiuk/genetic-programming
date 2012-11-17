@@ -103,16 +103,16 @@ public class GpGene implements Gene<GpGene> {
 			mutatingNode.setChilds(subList);
 		}
 
-		if (function.coefficientsCount() > mutatingNode.getCoefficients().size()) {
-			for (int i = 0; i < ((function.coefficientsCount() - mutatingNode.getCoefficients().size()) + 1); i++) {
+		if (function.coefficientsCount() > mutatingNode.getCoefficientsOfNode().size()) {
+			for (int i = 0; i < ((function.coefficientsCount() - mutatingNode.getCoefficientsOfNode().size()) + 1); i++) {
 				mutatingNode.addCoefficient(this.context.getRandomValue());
 			}
-		} else if (function.coefficientsCount() < mutatingNode.getCoefficients().size()) {
+		} else if (function.coefficientsCount() < mutatingNode.getCoefficientsOfNode().size()) {
 			List<Double> subList = new LinkedList<Double>();
 			for (int i = 0; i < function.coefficientsCount(); i++) {
-				subList.add(mutatingNode.getCoefficients().get(i));
+				subList.add(mutatingNode.getCoefficientsOfNode().get(i));
 			}
-			mutatingNode.setCoefficients(subList);
+			mutatingNode.setCoefficientsOfNode(subList);
 		}
 	}
 
@@ -160,7 +160,6 @@ public class GpGene implements Gene<GpGene> {
 
 	private Expression getRandomSubTree(Expression tree) {
 		List<Expression> allNodesOfTree = tree.getAllNodesAsList();
-		// Collections.shuffle( allNodesOfTree );
 		int allNodesOfTreeCount = allNodesOfTree.size();
 
 		if ((allNodesOfTreeCount >= 7) && (Math.random() > 0.7)) {
@@ -174,7 +173,7 @@ public class GpGene implements Gene<GpGene> {
 	private void swapNode(Expression oldNode, Expression newNode) {
 		oldNode.setChilds(newNode.getChilds());
 		oldNode.setFunction(newNode.getFunction());
-		oldNode.setCoefficients(newNode.getCoefficients());
+		oldNode.setCoefficientsOfNode(newNode.getCoefficientsOfNode());
 		oldNode.setVariable(newNode.getVariable());
 	}
 
