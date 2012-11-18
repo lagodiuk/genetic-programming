@@ -25,12 +25,12 @@ public class SyntaxTreeUtilsTest {
 		Expression const3 = constantExpr(3);
 
 		Expression complexExpr = addExpr(varX, subExpr(const3, addExpr(const1, const2)));
-		assertEquals("( x + ( 3.0 - ( 1.0 + 2.0 ) ) )", complexExpr.print(context));
+		assertEquals("(x + (3.0 - (1.0 + 2.0)))", complexExpr.print(context));
 		assertTrue(calculateDepth(complexExpr) == 2);
 
 		Expression simplifiedExpr = complexExpr.clone();
 		SyntaxTreeUtils.simplifyTree(simplifiedExpr, context);
-		assertEquals("( x + 0.0 )", simplifiedExpr.print(context));
+		assertEquals("(x + 0.0)", simplifiedExpr.print(context));
 		assertTrue(calculateDepth(simplifiedExpr) == 0);
 	}
 
@@ -47,11 +47,11 @@ public class SyntaxTreeUtilsTest {
 		Expression const6 = constantExpr(6);
 
 		Expression complexExpr = addExpr(addExpr(addExpr(const4, const6), addExpr(const5, varX)), subExpr(const3, addExpr(const1, const2)));
-		assertEquals("( ( ( 4.0 + 6.0 ) + ( 5.0 + x ) ) + ( 3.0 - ( 1.0 + 2.0 ) ) )", complexExpr.print(context));
+		assertEquals("(((4.0 + 6.0) + (5.0 + x)) + (3.0 - (1.0 + 2.0)))", complexExpr.print(context));
 
 		Expression simplifiedExpr = complexExpr.clone();
 		SyntaxTreeUtils.simplifyTree(simplifiedExpr, context);
-		assertEquals("( ( 10.0 + ( 5.0 + x ) ) + 0.0 )", simplifiedExpr.print(context));
+		assertEquals("((10.0 + (5.0 + x)) + 0.0)", simplifiedExpr.print(context));
 	}
 
 	@Test
@@ -65,7 +65,7 @@ public class SyntaxTreeUtilsTest {
 		Expression const4 = constantExpr(4);
 
 		Expression complexExpr = addExpr(varX, subExpr(const3, addExpr(const1, subExpr(const4, const2))));
-		assertEquals("( x + ( 3.0 - ( 1.0 + ( 4.0 - 2.0 ) ) ) )", complexExpr.print(context));
+		assertEquals("(x + (3.0 - (1.0 + (4.0 - 2.0))))", complexExpr.print(context));
 		assertTrue(calculateDepth(complexExpr) == 3);
 
 		Expression cutExpr = complexExpr.clone();
@@ -79,25 +79,28 @@ public class SyntaxTreeUtilsTest {
 		context.setVariable("x", 0);
 		context.setVariable("y", 0);
 
-		int maxDepth = 7;
+		for (int maxDepth = 0; maxDepth < 7; maxDepth++) {
+			Set<Integer> depths = new HashSet<Integer>();
+			for (int i = 0; i < 100; i++) {
+				Expression tree = SyntaxTreeUtils.createTree(maxDepth, context);
+				int currDepth = calculateDepth(tree);
+				depths.add(currDepth);
+			}
 
-		Set<Integer> depths = new HashSet<Integer>();
-		for (int i = 0; i < 10000; i++) {
-			Expression tree = SyntaxTreeUtils.createTree(maxDepth, context);
-			int currDepth = calculateDepth(tree);
-			depths.add(currDepth);
+			Set<Integer> target = new HashSet<Integer>();
+			for (int i = -1; i < maxDepth; i++) {
+				target.add(i);
+			}
+
+			for (Integer depth : depths) {
+				assertTrue(target.contains(depth));
+			}
 		}
-		assertTrue(depths.contains(0));
-		assertTrue(depths.contains(1));
-		assertTrue(depths.contains(2));
-		assertTrue(depths.contains(3));
-		assertTrue(depths.contains(4));
-		assertTrue(depths.contains(5));
-		assertTrue(depths.contains(6));
 	}
 
 	/**
-	 * depth except of root and leaves
+	 * depth except of root and leaves <br/>
+	 * returns -1 if root is terminal node
 	 */
 	private static int calculateDepth(Expression root) {
 		return fullDepth(root) - 2;

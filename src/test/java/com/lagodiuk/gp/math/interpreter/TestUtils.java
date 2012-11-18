@@ -1,7 +1,9 @@
 package com.lagodiuk.gp.math.interpreter;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public class TestUtils {
 
@@ -27,6 +29,14 @@ public class TestUtils {
 
 	public static <T> List<T> listFromArray(T... elements) {
 		List<T> list = new LinkedList<T>();
+		for (T elem : elements) {
+			list.add(elem);
+		}
+		return list;
+	}
+
+	public static <T> Set<T> setFromArray(T... elements) {
+		Set<T> list = new HashSet<T>();
 		for (T elem : elements) {
 			list.add(elem);
 		}

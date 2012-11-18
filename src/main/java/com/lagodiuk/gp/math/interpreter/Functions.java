@@ -46,7 +46,7 @@ public enum Functions implements Function {
 			double retVal = expression.getCoefficientsOfNode().get(0);
 			String retStr = null;
 			if (retVal < 0) {
-				retStr = "(" + retVal + ")";
+				retStr = String.format("(%s)", retVal);
 			} else {
 				retStr = "" + retVal;
 			}
@@ -147,7 +147,7 @@ public enum Functions implements Function {
 			List<Expression> childs = expression.getChilds();
 			String left = childs.get(0).print(context);
 			String right = childs.get(1).print(context);
-			return "( " + left + " + " + right + " )";
+			return String.format("(%s + %s)", left, right);
 		}
 	},
 	SUB {
@@ -197,7 +197,7 @@ public enum Functions implements Function {
 			String left = childs.get(0).print(context);
 			String right = childs.get(1).print(context);
 
-			return "( " + left + " - " + right + " )";
+			return String.format("(%s - %s)", left, right);
 		}
 	},
 	MUL {
@@ -247,7 +247,7 @@ public enum Functions implements Function {
 			String left = childs.get(0).print(context);
 			String right = childs.get(1).print(context);
 
-			return "( " + left + " * " + right + " )";
+			return String.format("(%s * %s)", left, right);
 		}
 	},
 	DIV {
@@ -297,7 +297,7 @@ public enum Functions implements Function {
 			String left = childs.get(0).print(context);
 			String right = childs.get(1).print(context);
 
-			return "( " + left + " / " + right + " )";
+			return String.format("(%s / %s)", left, right);
 		}
 	},
 	SQRT {
@@ -346,7 +346,7 @@ public enum Functions implements Function {
 
 			String arg = childs.get(0).print(context);
 
-			return "sqrt( abs( " + arg + " ) )";
+			return String.format("sqrt(abs(%s))", arg);
 		}
 	},
 	POW {
@@ -397,7 +397,7 @@ public enum Functions implements Function {
 			String arg1 = childs.get(0).print(context);
 			String arg2 = childs.get(1).print(context);
 
-			return "( " + arg1 + " ) ^ ( " + arg2 + " )";
+			return String.format("(%s)^(%s)", arg1, arg2);
 		}
 	},
 	SIN {
@@ -446,7 +446,7 @@ public enum Functions implements Function {
 
 			String arg = childs.get(0).print(context);
 
-			return "sin( " + arg + " )";
+			return String.format("sin(%s)", arg);
 		}
 	},
 	COS {
@@ -495,7 +495,7 @@ public enum Functions implements Function {
 
 			String arg = childs.get(0).print(context);
 
-			return "cos( " + arg + " )";
+			return String.format("cos(%s)", arg);
 		}
 	},
 
