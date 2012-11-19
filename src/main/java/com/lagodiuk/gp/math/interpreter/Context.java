@@ -85,10 +85,16 @@ public class Context {
 	}
 
 	public String getRandomVariableName() {
-		List<String> varNames = new ArrayList<String>();
-		varNames.addAll(this.variables.keySet());
-		int indx = this.random.nextInt(varNames.size());
-		return varNames.get(indx);
+		int indx = this.random.nextInt(this.variables.keySet().size());
+		int i = 0;
+		for (String varName : this.variables.keySet()) {
+			if (i == indx) {
+				return varName;
+			}
+			++i;
+		}
+		// Unreachable code
+		return this.variables.keySet().iterator().next();
 	}
 
 	public double getRandomValue() {
