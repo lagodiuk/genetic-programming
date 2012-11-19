@@ -86,8 +86,12 @@ public class Expression implements Cloneable {
 		if (this.variable != null) {
 			cloned.variable = new String(this.variable);
 		}
-		cloned.childs.addAll(this.childs);
-		cloned.coefficients.addAll(this.coefficients);
+		for (Expression c : this.childs) {
+			cloned.childs.add(c.clone());
+		}
+		for (Double d : this.coefficients) {
+			cloned.coefficients.add(d);
+		}
 		return cloned;
 	}
 
