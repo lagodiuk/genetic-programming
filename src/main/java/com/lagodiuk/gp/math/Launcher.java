@@ -2,6 +2,7 @@ package com.lagodiuk.gp.math;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 import com.lagodiuk.ga.Environment;
 import com.lagodiuk.ga.Fitness;
@@ -20,7 +21,7 @@ public class Launcher {
 		for (Function f : Functions.values()) {
 			functions.add(f);
 		}
-		Context context = new Context(functions);
+		final Context context = new Context(functions);
 		context.setVariable("x", 10);
 		// context.setVariable( "y", 10 );
 
@@ -36,15 +37,26 @@ public class Launcher {
 		env.setParentGenesSurviveCount(1);
 
 		env.addIterationListener(new IterartionListener<GpGene, Double>() {
+
+			private Locale locale = new Locale("ru");
+
+			private double prevFitValue = -1;
+
 			@Override
 			public void update(Environment<GpGene, Double> environment) {
 				GpGene bestGene = environment.getBest();
 
-				double fitValue = environment.fitness(bestGene);
+				double currFitValue = environment.fitness(bestGene);
 
-				System.out.println(environment.getIteration() + "\t" + fitValue);
+				if (Double.compare(currFitValue, this.prevFitValue) != 0) {
+					System.out.println("Func = " + bestGene.getSyntaxTree().print(context));
+				}
 
-				if (fitValue < 10) {
+				System.out.println(String.format(this.locale, "%s \t %s", environment.getIteration(), currFitValue));
+
+				this.prevFitValue = currFitValue;
+
+				if (currFitValue < 10) {
 					environment.terminate();
 				}
 			}
@@ -52,8 +64,7 @@ public class Launcher {
 
 		env.iterate(200);
 
-		System.out.println(env.getBest().getSyntaxTree().print(context));
-		System.out.println(fit.calculate(env.getBest()));
+		System.out.println("Func = " + env.getBest().getSyntaxTree().print(context));
 	}
 
 }

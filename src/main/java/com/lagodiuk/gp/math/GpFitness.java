@@ -11,9 +11,8 @@ public class GpFitness implements Fitness<GpGene, Double> {
 
 			gene.getContext().setVariable("x", i);
 
-			double target = (i * i * i * 5) + i + 10;
-			// double target = ((((3 * i * i * i) - (i * i * 7)) + (i * 10)) -
-			// 35) * i;
+			// double target = (i * i * i * 5) + i + 10;
+			double target = ((((3 * i * i * i) - (i * i * 7)) + (i * 10)) - 35) * i;
 			// double target = i * i;
 			// double target = ( i + 100 ) * ( i - 100 );
 			// double target = i + 6;
