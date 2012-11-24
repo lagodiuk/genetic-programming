@@ -8,6 +8,7 @@ import com.lagodiuk.ga.Fitness;
 import com.lagodiuk.ga.IterartionListener;
 import com.lagodiuk.ga.Population;
 import com.lagodiuk.gp.math.interpreter.Context;
+import com.lagodiuk.gp.math.interpreter.Expression;
 import com.lagodiuk.gp.math.interpreter.Function;
 import com.lagodiuk.gp.math.interpreter.SyntaxTreeUtils;
 
@@ -21,9 +22,11 @@ public class SymbolicRegression {
 
 	private Environment<GpGene, Double> environment;
 
+	private Context context;
+
 	public SymbolicRegression(Fitness<GpGene, Double> fitnessFunction, Collection<String> variables, List<? extends Function> baseFunctions) {
-		Context context = new Context(baseFunctions, variables);
-		Population<GpGene> population = this.createPopulation(context, fitnessFunction, DEFAULT_POPULATION_SIZE);
+		this.context = new Context(baseFunctions, variables);
+		Population<GpGene> population = this.createPopulation(this.context, fitnessFunction, DEFAULT_POPULATION_SIZE);
 		this.environment = new Environment<GpGene, Double>(population, fitnessFunction);
 		this.environment.setParentGenesSurviveCount(INITIAL_PARENT_GENES_SURVIVE_COUNT);
 	}
@@ -43,6 +46,14 @@ public class SymbolicRegression {
 
 	public void evolve(int itrationsCount) {
 		this.environment.iterate(itrationsCount);
+	}
+
+	public Context getContext() {
+		return this.context;
+	}
+
+	public Expression getBestSyntaxTree() {
+		return this.environment.getBest().getSyntaxTree();
 	}
 
 }

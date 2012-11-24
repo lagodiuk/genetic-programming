@@ -15,8 +15,8 @@ public class GpFitness2 implements Fitness<GpGene, Double> {
 				// double target = x * 5 + y * ( y - 4 );
 				// double target = x + y;
 				// double target = x * 5 + y * ( y - 4 ) + x * y;
-				double target = x * x;
-				// double target = x * x + y * y;
+				// double target = x * x;
+				double target = (x * x) + (y * y);
 
 				double val = target - gene.getSyntaxTree().eval(gene.getContext());
 
