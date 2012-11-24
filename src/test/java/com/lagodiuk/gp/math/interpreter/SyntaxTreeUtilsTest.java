@@ -25,12 +25,12 @@ public class SyntaxTreeUtilsTest {
 		Expression const3 = constantExpr(3);
 
 		Expression complexExpr = addExpr(varX, subExpr(const3, addExpr(const1, const2)));
-		assertEquals("(x + (3.0 - (1.0 + 2.0)))", complexExpr.print(context));
+		assertEquals("(x + (3.0 - (1.0 + 2.0)))", complexExpr.print());
 		assertTrue(calculateDepth(complexExpr) == 2);
 
 		Expression simplifiedExpr = complexExpr.clone();
 		SyntaxTreeUtils.simplifyTree(simplifiedExpr, context);
-		assertEquals("(x + 0.0)", simplifiedExpr.print(context));
+		assertEquals("(x + 0.0)", simplifiedExpr.print());
 		assertTrue(calculateDepth(simplifiedExpr) == 0);
 	}
 
@@ -47,11 +47,11 @@ public class SyntaxTreeUtilsTest {
 		Expression const6 = constantExpr(6);
 
 		Expression complexExpr = addExpr(addExpr(addExpr(const4, const6), addExpr(const5, varX)), subExpr(const3, addExpr(const1, const2)));
-		assertEquals("(((4.0 + 6.0) + (5.0 + x)) + (3.0 - (1.0 + 2.0)))", complexExpr.print(context));
+		assertEquals("(((4.0 + 6.0) + (5.0 + x)) + (3.0 - (1.0 + 2.0)))", complexExpr.print());
 
 		Expression simplifiedExpr = complexExpr.clone();
 		SyntaxTreeUtils.simplifyTree(simplifiedExpr, context);
-		assertEquals("((10.0 + (5.0 + x)) + 0.0)", simplifiedExpr.print(context));
+		assertEquals("((10.0 + (5.0 + x)) + 0.0)", simplifiedExpr.print());
 	}
 
 	@Test
@@ -65,7 +65,7 @@ public class SyntaxTreeUtilsTest {
 		Expression const4 = constantExpr(4);
 
 		Expression complexExpr = addExpr(varX, subExpr(const3, addExpr(const1, subExpr(const4, const2))));
-		assertEquals("(x + (3.0 - (1.0 + (4.0 - 2.0))))", complexExpr.print(context));
+		assertEquals("(x + (3.0 - (1.0 + (4.0 - 2.0))))", complexExpr.print());
 		assertTrue(calculateDepth(complexExpr) == 3);
 
 		Expression cutExpr = complexExpr.clone();

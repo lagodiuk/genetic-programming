@@ -23,8 +23,8 @@ public class Expression implements Cloneable {
 		return this.function.eval(this, context);
 	}
 
-	public String print(Context context) {
-		return this.function.print(this, context);
+	public String print() {
+		return this.function.print(this);
 	}
 
 	public List<Expression> getChilds() {

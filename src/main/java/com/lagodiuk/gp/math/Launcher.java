@@ -49,7 +49,7 @@ public class Launcher {
 				double currFitValue = environment.fitness(bestGene);
 
 				if (Double.compare(currFitValue, this.prevFitValue) != 0) {
-					System.out.println("Func = " + bestGene.getSyntaxTree().print(context));
+					System.out.println("Func = " + bestGene.getSyntaxTree().print());
 				}
 
 				System.out.println(String.format(this.locale, "%s \t %s", environment.getIteration(), currFitValue));
@@ -64,7 +64,7 @@ public class Launcher {
 
 		env.iterate(200);
 
-		System.out.println("Func = " + env.getBest().getSyntaxTree().print(context));
+		System.out.println("Func = " + env.getBest().getSyntaxTree().print());
 	}
 
 }

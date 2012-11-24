@@ -42,7 +42,7 @@ public enum Functions implements Function {
 		}
 
 		@Override
-		public String print(Expression expression, Context context) {
+		public String print(Expression expression) {
 			double retVal = expression.getCoefficientsOfNode().get(0);
 			String retStr = null;
 			if (retVal < 0) {
@@ -97,7 +97,7 @@ public enum Functions implements Function {
 		}
 
 		@Override
-		public String print(Expression expression, Context context) {
+		public String print(Expression expression) {
 			return expression.getVariable();
 		}
 	},
@@ -143,10 +143,10 @@ public enum Functions implements Function {
 		}
 
 		@Override
-		public String print(Expression expression, Context context) {
+		public String print(Expression expression) {
 			List<Expression> childs = expression.getChilds();
-			String left = childs.get(0).print(context);
-			String right = childs.get(1).print(context);
+			String left = childs.get(0).print();
+			String right = childs.get(1).print();
 			return String.format("(%s + %s)", left, right);
 		}
 	},
@@ -192,10 +192,10 @@ public enum Functions implements Function {
 		}
 
 		@Override
-		public String print(Expression expression, Context context) {
+		public String print(Expression expression) {
 			List<Expression> childs = expression.getChilds();
-			String left = childs.get(0).print(context);
-			String right = childs.get(1).print(context);
+			String left = childs.get(0).print();
+			String right = childs.get(1).print();
 
 			return String.format("(%s - %s)", left, right);
 		}
@@ -242,10 +242,10 @@ public enum Functions implements Function {
 		}
 
 		@Override
-		public String print(Expression expression, Context context) {
+		public String print(Expression expression) {
 			List<Expression> childs = expression.getChilds();
-			String left = childs.get(0).print(context);
-			String right = childs.get(1).print(context);
+			String left = childs.get(0).print();
+			String right = childs.get(1).print();
 
 			return String.format("(%s * %s)", left, right);
 		}
@@ -292,10 +292,10 @@ public enum Functions implements Function {
 		}
 
 		@Override
-		public String print(Expression expression, Context context) {
+		public String print(Expression expression) {
 			List<Expression> childs = expression.getChilds();
-			String left = childs.get(0).print(context);
-			String right = childs.get(1).print(context);
+			String left = childs.get(0).print();
+			String right = childs.get(1).print();
 
 			return String.format("(%s / %s)", left, right);
 		}
@@ -341,10 +341,10 @@ public enum Functions implements Function {
 		}
 
 		@Override
-		public String print(Expression expression, Context context) {
+		public String print(Expression expression) {
 			List<Expression> childs = expression.getChilds();
 
-			String arg = childs.get(0).print(context);
+			String arg = childs.get(0).print();
 
 			return String.format("sqrt(abs(%s))", arg);
 		}
@@ -391,11 +391,11 @@ public enum Functions implements Function {
 		}
 
 		@Override
-		public String print(Expression expression, Context context) {
+		public String print(Expression expression) {
 			List<Expression> childs = expression.getChilds();
 
-			String arg1 = childs.get(0).print(context);
-			String arg2 = childs.get(1).print(context);
+			String arg1 = childs.get(0).print();
+			String arg2 = childs.get(1).print();
 
 			return String.format("(%s)^(%s)", arg1, arg2);
 		}
@@ -441,10 +441,10 @@ public enum Functions implements Function {
 		}
 
 		@Override
-		public String print(Expression expression, Context context) {
+		public String print(Expression expression) {
 			List<Expression> childs = expression.getChilds();
 
-			String arg = childs.get(0).print(context);
+			String arg = childs.get(0).print();
 
 			return String.format("sin(%s)", arg);
 		}
@@ -490,10 +490,10 @@ public enum Functions implements Function {
 		}
 
 		@Override
-		public String print(Expression expression, Context context) {
+		public String print(Expression expression) {
 			List<Expression> childs = expression.getChilds();
 
-			String arg = childs.get(0).print(context);
+			String arg = childs.get(0).print();
 
 			return String.format("cos(%s)", arg);
 		}

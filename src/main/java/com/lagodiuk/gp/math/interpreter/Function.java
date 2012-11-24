@@ -12,7 +12,7 @@ public interface Function {
 
 	boolean isNumber();
 
-	String print(Expression expression, Context context);
+	String print(Expression expression);
 
 	List<Double> getCoefficients(Expression expression);
 

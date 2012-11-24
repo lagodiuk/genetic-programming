@@ -6,7 +6,6 @@ import java.util.Locale;
 
 import com.lagodiuk.ga.Environment;
 import com.lagodiuk.ga.IterartionListener;
-import com.lagodiuk.gp.math.interpreter.Context;
 import com.lagodiuk.gp.math.interpreter.Functions;
 
 public class Launcher2 {
@@ -22,12 +21,11 @@ public class Launcher2 {
 			@Override
 			public void update(Environment<GpGene, Double> environment) {
 				GpGene bestGene = environment.getBest();
-				Context context = bestGene.getContext();
 
 				double currFitValue = environment.fitness(bestGene);
 
 				if (Double.compare(currFitValue, this.prevFitValue) != 0) {
-					System.out.println("Func = " + bestGene.getSyntaxTree().print(context));
+					System.out.println("Func = " + bestGene.getSyntaxTree().print());
 				}
 
 				System.out.println(String.format(this.locale, "%s \t %s", environment.getIteration(), currFitValue));
