@@ -1,6 +1,7 @@
 package com.lagodiuk.gp.math.interpreter;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,10 @@ public class Context {
 	private int nextRndFunctionIndx = 0;
 
 	public Context(List<Function> functions) {
+		this(functions, Collections.<String> emptyList());
+	}
+
+	public Context(List<? extends Function> functions, Collection<String> variables) {
 		this.allFunctions.addAll(functions);
 		for (Function f : functions) {
 			if (f.argumentsCount() == 0) {
@@ -39,6 +44,10 @@ public class Context {
 		}
 
 		Collections.shuffle(this.allFunctions);
+
+		for (String variable : variables) {
+			this.setVariable(variable, 0);
+		}
 	}
 
 	public double lookupVariable(String variable) {
