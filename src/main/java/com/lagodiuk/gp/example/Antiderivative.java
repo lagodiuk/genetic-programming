@@ -15,7 +15,7 @@ public class Antiderivative implements ExpressionFitness {
 		for (int x = -10; x < 11; x++) {
 			double target = this.targetDerivative(x);
 
-			double exprDerivative = expressionDerivative(expression, context, x);
+			double exprDerivative = this.expressionDerivative(expression, context, x);
 
 			delt += this.sqr(target - exprDerivative);
 		}
@@ -35,7 +35,7 @@ public class Antiderivative implements ExpressionFitness {
 	}
 
 	private double targetDerivative(double x) {
-		return x;
+		return (x * 5) + (4 * Math.sin(x));
 	}
 
 	private double sqr(double x) {
