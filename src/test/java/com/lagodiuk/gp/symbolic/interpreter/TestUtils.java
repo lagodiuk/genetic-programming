@@ -1,9 +1,14 @@
-package com.lagodiuk.gp.math.interpreter;
+package com.lagodiuk.gp.symbolic.interpreter;
 
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+
+import com.lagodiuk.gp.symbolic.interpreter.Context;
+import com.lagodiuk.gp.symbolic.interpreter.Expression;
+import com.lagodiuk.gp.symbolic.interpreter.Function;
+import com.lagodiuk.gp.symbolic.interpreter.Functions;
 
 public class TestUtils {
 

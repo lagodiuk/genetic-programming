@@ -1,4 +1,4 @@
-package com.lagodiuk.gp.math;
+package com.lagodiuk.gp.symbolic;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -9,12 +9,12 @@ import com.lagodiuk.ga.Environment;
 import com.lagodiuk.ga.Fitness;
 import com.lagodiuk.ga.Gene;
 import com.lagodiuk.ga.Population;
-import com.lagodiuk.gp.math.interpreter.Context;
-import com.lagodiuk.gp.math.interpreter.Expression;
-import com.lagodiuk.gp.math.interpreter.Function;
-import com.lagodiuk.gp.math.interpreter.SyntaxTreeUtils;
+import com.lagodiuk.gp.symbolic.interpreter.Context;
+import com.lagodiuk.gp.symbolic.interpreter.Expression;
+import com.lagodiuk.gp.symbolic.interpreter.Function;
+import com.lagodiuk.gp.symbolic.interpreter.SyntaxTreeUtils;
 
-public class GpGene implements Gene<GpGene> {
+class GpGene implements Gene<GpGene> {
 
 	private Expression syntaxTree;
 

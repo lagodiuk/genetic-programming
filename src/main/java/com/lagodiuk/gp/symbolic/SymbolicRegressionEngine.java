@@ -1,4 +1,4 @@
-package com.lagodiuk.gp.math;
+package com.lagodiuk.gp.symbolic;
 
 import java.util.Collection;
 import java.util.List;
@@ -7,12 +7,12 @@ import com.lagodiuk.ga.Environment;
 import com.lagodiuk.ga.Fitness;
 import com.lagodiuk.ga.IterartionListener;
 import com.lagodiuk.ga.Population;
-import com.lagodiuk.gp.math.interpreter.Context;
-import com.lagodiuk.gp.math.interpreter.Expression;
-import com.lagodiuk.gp.math.interpreter.Function;
-import com.lagodiuk.gp.math.interpreter.SyntaxTreeUtils;
+import com.lagodiuk.gp.symbolic.interpreter.Context;
+import com.lagodiuk.gp.symbolic.interpreter.Expression;
+import com.lagodiuk.gp.symbolic.interpreter.Function;
+import com.lagodiuk.gp.symbolic.interpreter.SyntaxTreeUtils;
 
-public class SymbolicRegression {
+public class SymbolicRegressionEngine {
 
 	private static final int INITIAL_PARENT_GENES_SURVIVE_COUNT = 1;
 
@@ -24,8 +24,12 @@ public class SymbolicRegression {
 
 	private Context context;
 
-	public SymbolicRegression(Fitness<GpGene, Double> fitnessFunction, Collection<String> variables, List<? extends Function> baseFunctions) {
+	private ExpressionFitness expressionFitness;
+
+	public SymbolicRegressionEngine(ExpressionFitness expressionFitness, Collection<String> variables, List<? extends Function> baseFunctions) {
 		this.context = new Context(baseFunctions, variables);
+		this.expressionFitness = expressionFitness;
+		SymbolicRegressionFitness fitnessFunction = new SymbolicRegressionFitness(this.expressionFitness);
 		Population<GpGene> population = this.createPopulation(this.context, fitnessFunction, DEFAULT_POPULATION_SIZE);
 		this.environment = new Environment<GpGene, Double>(population, fitnessFunction);
 		this.environment.setParentGenesSurviveCount(INITIAL_PARENT_GENES_SURVIVE_COUNT);
@@ -40,8 +44,13 @@ public class SymbolicRegression {
 		return population;
 	}
 
-	public void addIterationListener(IterartionListener<GpGene, Double> listener) {
-		this.environment.addIterationListener(listener);
+	public void addIterationListener(final SymbolicRegressionIterationListener listener) {
+		this.environment.addIterationListener(new IterartionListener<GpGene, Double>() {
+			@Override
+			public void update(Environment<GpGene, Double> environment) {
+				listener.update(SymbolicRegressionEngine.this);
+			}
+		});
 	}
 
 	public void evolve(int itrationsCount) {
@@ -54,6 +63,22 @@ public class SymbolicRegression {
 
 	public Expression getBestSyntaxTree() {
 		return this.environment.getBest().getSyntaxTree();
+	}
+
+	public double fitness(Expression expression) {
+		return this.expressionFitness.fitness(expression, this.context);
+	}
+
+	public void terminate() {
+		this.environment.terminate();
+	}
+
+	public int getIteration() {
+		return this.environment.getIteration();
+	}
+
+	public void setParentsSurviveCount(int n) {
+		this.environment.setParentGenesSurviveCount(n);
 	}
 
 }

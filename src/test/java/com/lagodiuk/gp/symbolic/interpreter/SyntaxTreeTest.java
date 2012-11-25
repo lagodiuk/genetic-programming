@@ -1,17 +1,22 @@
-package com.lagodiuk.gp.math.interpreter;
+package com.lagodiuk.gp.symbolic.interpreter;
 
-import static com.lagodiuk.gp.math.interpreter.TestUtils.addExpr;
-import static com.lagodiuk.gp.math.interpreter.TestUtils.constantExpr;
-import static com.lagodiuk.gp.math.interpreter.TestUtils.createContext;
-import static com.lagodiuk.gp.math.interpreter.TestUtils.listFromArray;
-import static com.lagodiuk.gp.math.interpreter.TestUtils.subExpr;
-import static com.lagodiuk.gp.math.interpreter.TestUtils.variableExpr;
+import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.addExpr;
+import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.constantExpr;
+import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.createContext;
+import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.listFromArray;
+import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.subExpr;
+import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.variableExpr;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
 import org.junit.Test;
+
+import com.lagodiuk.gp.symbolic.interpreter.Context;
+import com.lagodiuk.gp.symbolic.interpreter.Expression;
+import com.lagodiuk.gp.symbolic.interpreter.Function;
+import com.lagodiuk.gp.symbolic.interpreter.Functions;
 
 public class SyntaxTreeTest {
 

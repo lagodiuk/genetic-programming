@@ -1,4 +1,4 @@
-package com.lagodiuk.gp.math.interpreter;
+package com.lagodiuk.gp.symbolic.interpreter;
 
 import java.util.ArrayList;
 import java.util.Collection;

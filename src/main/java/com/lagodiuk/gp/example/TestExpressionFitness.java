@@ -1,15 +1,17 @@
-package com.lagodiuk.gp.math;
+package com.lagodiuk.gp.example;
 
-import com.lagodiuk.ga.Fitness;
+import com.lagodiuk.gp.symbolic.ExpressionFitness;
+import com.lagodiuk.gp.symbolic.interpreter.Context;
+import com.lagodiuk.gp.symbolic.interpreter.Expression;
 
-public class GpFitness implements Fitness<GpGene, Double> {
+public class TestExpressionFitness implements ExpressionFitness {
 
 	@Override
-	public Double calculate(GpGene gene) {
+	public double fitness(Expression expression, Context context) {
 		double delt = 0;
 		for (int i = -20; i < 20; i++) {
 
-			gene.getContext().setVariable("x", i);
+			context.setVariable("x", i);
 
 			double target = (i * i * i * 5) + i + 10;
 			// double target = ((((3 * i * i * i) - (i * i * 7)) + (i * 10)) -
@@ -22,7 +24,7 @@ public class GpFitness implements Fitness<GpGene, Double> {
 			// (2)^(SIN(A2*5)*3)+A2
 			// double target = Math.pow(2, Math.sin(i * 5) * 3) + i;
 
-			double x = target - gene.getSyntaxTree().eval(gene.getContext());
+			double x = target - expression.eval(context);
 
 			delt += x * x;
 		}
