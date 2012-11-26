@@ -11,7 +11,7 @@ import com.lagodiuk.gp.symbolic.interpreter.Functions;
 public class Launcher {
 
 	public static void main(String[] args) {
-		SymbolicRegressionEngine sr = new SymbolicRegressionEngine(new Antiderivative(), list("x"), list(Functions.values()));
+		SymbolicRegressionEngine sr = new SymbolicRegressionEngine(new TestExpressionFitness(), list("x"), list(Functions.values()));
 
 		sr.addIterationListener(new SymbolicRegressionIterationListener() {
 			private double prevFitValue = -1;

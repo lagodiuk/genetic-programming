@@ -107,11 +107,15 @@ public class Context {
 	}
 
 	public double getRandomValue() {
-		return (this.random.nextGaussian() * (this.maxValue - this.minValue)) + this.minValue;
+		return (this.random.nextDouble() * (this.maxValue - this.minValue)) + this.minValue;
+		// return (this.random.nextGaussian() * (this.maxValue - this.minValue))
+		// + this.minValue;
 	}
 
 	public double getRandomMutationValue() {
-		return (this.random.nextGaussian() * (this.maxMutationValue - this.minMutationValue)) + this.minMutationValue;
+		return (this.random.nextDouble() * (this.maxMutationValue - this.minMutationValue)) + this.minMutationValue;
+		// return (this.random.nextGaussian() * (this.maxMutationValue -
+		// this.minMutationValue)) + this.minMutationValue;
 	}
 
 	public boolean hasVariables() {
