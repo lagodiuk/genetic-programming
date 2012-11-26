@@ -397,7 +397,7 @@ public enum Functions implements Function {
 			String arg1 = childs.get(0).print();
 			String arg2 = childs.get(1).print();
 
-			return String.format("(%s)^(%s)", arg1, arg2);
+			return String.format("(%s ^ %s)", arg1, arg2);
 		}
 	},
 	SIN {

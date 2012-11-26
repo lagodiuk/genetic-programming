@@ -6,13 +6,18 @@ import com.lagodiuk.gp.symbolic.interpreter.Expression;
 
 public class Antiderivative implements ExpressionFitness {
 
-	private static double dx = 1e-5;
+	private static double dx = 1e-2;
 
 	@Override
 	public double fitness(Expression expression, Context context) {
 		double delt = 0;
 
-		for (int x = -10; x < 11; x++) {
+		// To guarantee monotonic of evolved antiderivative
+		// the best approach is to trace each point through intervals of dx
+		// for (double x = -10; x < 10; x += dx) {
+		// but for small dx it works extremly slow
+		for (double x = -10; x < 10; x += 1) {
+
 			double target = this.targetDerivative(x);
 
 			double exprDerivative = this.expressionDerivative(expression, context, x);
@@ -23,19 +28,18 @@ public class Antiderivative implements ExpressionFitness {
 		return delt;
 	}
 
-	private double expressionDerivative(Expression expression, Context context, int x) {
+	private double expressionDerivative(Expression expression, Context context, double x) {
 		context.setVariable("x", x);
 		double exprX = expression.eval(context);
 
 		context.setVariable("x", x + dx);
 		double exprXPlusdX = expression.eval(context);
 
-		double exprDerivative = (exprXPlusdX - exprX) / dx;
-		return exprDerivative;
+		return (exprXPlusdX - exprX) / dx;
 	}
 
 	private double targetDerivative(double x) {
-		return (x * 5) + (4 * Math.sin(x));
+		return x * Math.sin(x);
 	}
 
 	private double sqr(double x) {
