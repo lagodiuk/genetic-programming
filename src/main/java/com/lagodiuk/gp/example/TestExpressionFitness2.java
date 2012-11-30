@@ -16,9 +16,9 @@ public class TestExpressionFitness2 implements ExpressionFitness {
 
 				// double target = (x * 5) + (y * (y - 4));
 				// double target = x + y;
-				double target = (x * 5) + (y * (y - 4)) + (x * y);
+				// double target = (x * 5) + (y * (y - 4)) + (x * y);
 				// double target = x * x;
-				// double target = (x * x) + (y * y);
+				double target = (x * x) + (y * y);
 
 				double val = target - expression.eval(context);
 
