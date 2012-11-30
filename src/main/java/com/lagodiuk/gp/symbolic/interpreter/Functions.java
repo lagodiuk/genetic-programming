@@ -400,6 +400,57 @@ public enum Functions implements Function {
 			return String.format("(%s ^ %s)", arg1, arg2);
 		}
 	},
+	LN {
+		private double threshold = 1e-5;
+
+		private int coefficientsCount = 0;
+
+		@Override
+		public int coefficientsCount() {
+			return this.coefficientsCount;
+		}
+
+		@Override
+		public List<Double> getCoefficients(Expression expression) {
+			return new LinkedList<Double>();
+		}
+
+		@Override
+		public void setCoefficients(Expression expression, List<Double> coefficients, int startIndex) {
+			expression.removeCoefficients();
+		}
+
+		@Override
+		public int argumentsCount() {
+			return 1;
+		}
+
+		@Override
+		public boolean isVariable() {
+			return false;
+		}
+
+		@Override
+		public boolean isNumber() {
+			return false;
+		}
+
+		@Override
+		public double eval(Expression expression, Context context) {
+			List<Expression> childs = expression.getChilds();
+			double arg = childs.get(0).eval(context);
+			return Math.log(Math.abs(arg) + this.threshold);
+		}
+
+		@Override
+		public String print(Expression expression) {
+			List<Expression> childs = expression.getChilds();
+
+			String arg = childs.get(0).print();
+
+			return String.format("ln(abs(%s) + %s)", arg, this.threshold);
+		}
+	},
 	SIN {
 		private int coefficientsCount = 0;
 
