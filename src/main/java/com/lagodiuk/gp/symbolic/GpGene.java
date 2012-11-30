@@ -59,16 +59,20 @@ class GpGene implements Gene<GpGene> {
 	public GpGene mutate() {
 		GpGene ret = new GpGene(this.context, this.fitnessFunction, this.syntaxTree.clone());
 
-		int type = this.random.nextInt(4);
+		int type = this.random.nextInt(3);
 		switch (type) {
 			case 0:
 				ret.mutateByRandomChangeOfFunction();
+				break;
 			case 1:
 				ret.mutateByRandomChangeOfChild();
+				break;
+			// case 2:
+			// ret.mutateByShuffleOfChildsList();
+			// break;
 			case 2:
-				ret.mutateByShuffleOfChildsList();
-			case 3:
 				ret.mutateByRandomChangeOfNodeToChild();
+				break;
 		}
 
 		ret.optimizeTree();
@@ -79,7 +83,7 @@ class GpGene implements Gene<GpGene> {
 		Expression mutatingNode = this.getRandomSubTree(this.syntaxTree);
 
 		Function function = null;
-		if (Math.random() > 0.5) {
+		if (this.random.nextDouble() > 0.5) {
 			function = this.context.getRandomFunction();
 		} else {
 			function = this.context.getRandomTerminalFunction();
@@ -151,7 +155,7 @@ class GpGene implements Gene<GpGene> {
 
 			Expression child = mutatingNode.getChilds().get(indx);
 
-			this.swapNode(mutatingNode, child);
+			this.swapNode(mutatingNode, child.clone());
 
 		} else {
 			this.mutateByRandomChangeOfFunction();
@@ -162,9 +166,9 @@ class GpGene implements Gene<GpGene> {
 		List<Expression> allNodesOfTree = tree.getAllNodesAsList();
 		int allNodesOfTreeCount = allNodesOfTree.size();
 
-		if ((allNodesOfTreeCount >= 7) && (Math.random() > 0.7)) {
-			allNodesOfTreeCount = allNodesOfTreeCount / 2;
-		}
+		// if ((allNodesOfTreeCount >= 7) && (Math.random() > 0.7)) {
+		// allNodesOfTreeCount = allNodesOfTreeCount / 2;
+		// }
 
 		int indx = this.random.nextInt(allNodesOfTreeCount);
 		return allNodesOfTree.get(indx);
