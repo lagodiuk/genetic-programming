@@ -3,7 +3,7 @@ package com.lagodiuk.gp.symbolic.interpreter;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.addExpr;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.constantExpr;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.createContext;
-import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.listFromArray;
+import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.list;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.subExpr;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.variableExpr;
 import static org.junit.Assert.assertEquals;
@@ -94,7 +94,7 @@ public class SyntaxTreeTest {
 		Context context = createContext(Functions.values());
 
 		Expression varX = new Expression(Functions.VARIABLE).setVariable("x");
-		Expression const5 = new Expression(Functions.CONSTANT).setCoefficientsOfNode(listFromArray(5.0));
+		Expression const5 = new Expression(Functions.CONSTANT).setCoefficientsOfNode(list(5.0));
 		Expression original = addExpr(const5, varX);
 		Expression clone = original.clone();
 
@@ -116,9 +116,9 @@ public class SyntaxTreeTest {
 		Expression complexExpr = subExpr(const3, subExpr(addExpr(varX, const1), const2));
 		assertEquals("(3.0 - ((x + 1.0) - 2.0))", complexExpr.print());
 
-		assertEquals(listFromArray(3.0, 1.0, 2.0), complexExpr.getCoefficientsOfTree());
+		assertEquals(list(3.0, 1.0, 2.0), complexExpr.getCoefficientsOfTree());
 
-		complexExpr.setCoefficientsOfTree(listFromArray(30.0, 10.0, 20.0));
+		complexExpr.setCoefficientsOfTree(list(30.0, 10.0, 20.0));
 		assertEquals("(30.0 - ((x + 10.0) - 20.0))", complexExpr.print());
 	}
 
@@ -128,7 +128,7 @@ public class SyntaxTreeTest {
 
 		Expression varX = variableExpr("x");
 
-		Expression linear = new Expression(linearFunc).setCoefficientsOfNode(listFromArray(9.0, 7.0)).setChilds(listFromArray(varX));
+		Expression linear = new Expression(linearFunc).setCoefficientsOfNode(list(9.0, 7.0)).setChilds(list(varX));
 		assertEquals("(9.0*x + 7.0)", linear.print());
 
 		Expression const1 = constantExpr(1);
@@ -138,9 +138,9 @@ public class SyntaxTreeTest {
 		Expression complexExpr = subExpr(const3, subExpr(addExpr(linear, const1), const2));
 		assertEquals("(3.0 - (((9.0*x + 7.0) + 1.0) - 2.0))", complexExpr.print());
 
-		assertEquals(listFromArray(3.0, 9.0, 7.0, 1.0, 2.0), complexExpr.getCoefficientsOfTree());
+		assertEquals(list(3.0, 9.0, 7.0, 1.0, 2.0), complexExpr.getCoefficientsOfTree());
 
-		complexExpr.setCoefficientsOfTree(listFromArray(30.0, 90.0, 70.0, 10.0, 20.0));
+		complexExpr.setCoefficientsOfTree(list(30.0, 90.0, 70.0, 10.0, 20.0));
 		assertEquals("(30.0 - (((90.0*x + 70.0) + 10.0) - 20.0))", complexExpr.print());
 	}
 
@@ -156,7 +156,7 @@ public class SyntaxTreeTest {
 
 		assertEquals("(3.0 - ((x + 1.0) - 2.0))", complexExpr.print());
 
-		assertEquals(listFromArray(complexExpr, const3, sub, add, const2, varX, const1), complexExpr.getAllNodesAsList());
+		assertEquals(list(complexExpr, const3, sub, add, const2, varX, const1), complexExpr.getAllNodesAsList());
 	}
 
 	/**

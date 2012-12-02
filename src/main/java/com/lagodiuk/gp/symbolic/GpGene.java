@@ -1,7 +1,7 @@
 package com.lagodiuk.gp.symbolic;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -32,19 +32,19 @@ class GpGene implements Gene<GpGene> {
 
 	@Override
 	public List<GpGene> crossover(GpGene anotherGene) {
-		List<GpGene> ret = new LinkedList<GpGene>();
+		List<GpGene> ret = new ArrayList<GpGene>(2);
 
 		GpGene thisClone = new GpGene(this.context, this.fitnessFunction, this.syntaxTree.clone());
 		GpGene anotherClone = new GpGene(this.context, this.fitnessFunction, anotherGene.syntaxTree.clone());
 
-		Expression thisRandomSubTree = this.getRandomSubTree(thisClone.syntaxTree);
-		Expression anotherRandomSubTree = this.getRandomSubTree(anotherClone.syntaxTree);
+		Expression thisRandomNode = this.getRandomNode(thisClone.syntaxTree);
+		Expression anotherRandomNode = this.getRandomNode(anotherClone.syntaxTree);
 
-		Expression thisRandomSubTreeClone = thisRandomSubTree.clone();
-		Expression anotherRandomSubTreeClone = anotherRandomSubTree.clone();
+		Expression thisRandomSubTreeClone = thisRandomNode.clone();
+		Expression anotherRandomSubTreeClone = anotherRandomNode.clone();
 
-		this.swapNode(thisRandomSubTree, anotherRandomSubTreeClone);
-		this.swapNode(anotherRandomSubTree, thisRandomSubTreeClone);
+		this.swapNode(thisRandomNode, anotherRandomSubTreeClone);
+		this.swapNode(anotherRandomNode, thisRandomSubTreeClone);
 
 		ret.add(thisClone);
 		ret.add(anotherClone);
@@ -59,7 +59,7 @@ class GpGene implements Gene<GpGene> {
 	public GpGene mutate() {
 		GpGene ret = new GpGene(this.context, this.fitnessFunction, this.syntaxTree.clone());
 
-		int type = this.random.nextInt(3);
+		int type = this.random.nextInt(4);
 		switch (type) {
 			case 0:
 				ret.mutateByRandomChangeOfFunction();
@@ -67,10 +67,10 @@ class GpGene implements Gene<GpGene> {
 			case 1:
 				ret.mutateByRandomChangeOfChild();
 				break;
-			// case 2:
-			// ret.mutateByShuffleOfChildsList();
-			// break;
 			case 2:
+				ret.mutateByReverseOfChildsList();
+				break;
+			case 3:
 				ret.mutateByRandomChangeOfNodeToChild();
 				break;
 		}
@@ -80,7 +80,7 @@ class GpGene implements Gene<GpGene> {
 	}
 
 	private void mutateByRandomChangeOfFunction() {
-		Expression mutatingNode = this.getRandomSubTree(this.syntaxTree);
+		Expression mutatingNode = this.getRandomNode(this.syntaxTree);
 
 		Function function = null;
 		if (this.random.nextDouble() > 0.5) {
@@ -95,37 +95,42 @@ class GpGene implements Gene<GpGene> {
 			mutatingNode.setVariable(this.context.getRandomVariableName());
 		}
 
-		if (function.argumentsCount() > mutatingNode.getChilds().size()) {
-			for (int i = 0; i < ((function.argumentsCount() - mutatingNode.getChilds().size()) + 1); i++) {
+		int functionArgumentsCount = function.argumentsCount();
+		int mutatingNodeChildsCount = mutatingNode.getChilds().size();
+
+		if (functionArgumentsCount > mutatingNodeChildsCount) {
+			for (int i = 0; i < ((functionArgumentsCount - mutatingNodeChildsCount) + 1); i++) {
 				mutatingNode.getChilds().add(SyntaxTreeUtils.createTree(0, this.context));
 			}
-		} else if (function.argumentsCount() < mutatingNode.getChilds().size()) {
-			List<Expression> subList = new LinkedList<Expression>();
-			for (int i = 0; i < function.argumentsCount(); i++) {
+		} else if (functionArgumentsCount < mutatingNodeChildsCount) {
+			List<Expression> subList = new ArrayList<Expression>(functionArgumentsCount);
+			for (int i = 0; i < functionArgumentsCount; i++) {
 				subList.add(mutatingNode.getChilds().get(i));
 			}
 			mutatingNode.setChilds(subList);
 		}
 
-		if (function.coefficientsCount() > mutatingNode.getCoefficientsOfNode().size()) {
-			for (int i = 0; i < ((function.coefficientsCount() - mutatingNode.getCoefficientsOfNode().size()) + 1); i++) {
+		int functionCoefficientsCount = function.coefficientsCount();
+		int mutatingNodeCoefficientsCount = mutatingNode.getCoefficientsOfNode().size();
+		if (functionCoefficientsCount > mutatingNodeCoefficientsCount) {
+			for (int i = 0; i < ((functionCoefficientsCount - mutatingNodeCoefficientsCount) + 1); i++) {
 				mutatingNode.addCoefficient(this.context.getRandomValue());
 			}
-		} else if (function.coefficientsCount() < mutatingNode.getCoefficientsOfNode().size()) {
-			List<Double> subList = new LinkedList<Double>();
-			for (int i = 0; i < function.coefficientsCount(); i++) {
+		} else if (functionCoefficientsCount < mutatingNodeCoefficientsCount) {
+			List<Double> subList = new ArrayList<Double>(functionCoefficientsCount);
+			for (int i = 0; i < functionCoefficientsCount; i++) {
 				subList.add(mutatingNode.getCoefficientsOfNode().get(i));
 			}
 			mutatingNode.setCoefficientsOfNode(subList);
 		}
 	}
 
-	private void mutateByShuffleOfChildsList() {
-		Expression mutatingNode = this.getRandomSubTree(this.syntaxTree);
+	private void mutateByReverseOfChildsList() {
+		Expression mutatingNode = this.getRandomNode(this.syntaxTree);
 
 		if (mutatingNode.getChilds().size() > 1) {
 
-			Collections.shuffle(mutatingNode.getChilds());
+			Collections.reverse(mutatingNode.getChilds());
 
 		} else {
 			this.mutateByRandomChangeOfFunction();
@@ -133,7 +138,7 @@ class GpGene implements Gene<GpGene> {
 	}
 
 	private void mutateByRandomChangeOfChild() {
-		Expression mutatingNode = this.getRandomSubTree(this.syntaxTree);
+		Expression mutatingNode = this.getRandomNode(this.syntaxTree);
 
 		if (!mutatingNode.getChilds().isEmpty()) {
 
@@ -147,7 +152,7 @@ class GpGene implements Gene<GpGene> {
 	}
 
 	private void mutateByRandomChangeOfNodeToChild() {
-		Expression mutatingNode = this.getRandomSubTree(this.syntaxTree);
+		Expression mutatingNode = this.getRandomNode(this.syntaxTree);
 
 		if (!mutatingNode.getChilds().isEmpty()) {
 
@@ -162,7 +167,7 @@ class GpGene implements Gene<GpGene> {
 		}
 	}
 
-	private Expression getRandomSubTree(Expression tree) {
+	private Expression getRandomNode(Expression tree) {
 		List<Expression> allNodesOfTree = tree.getAllNodesAsList();
 		int allNodesOfTreeCount = allNodesOfTree.size();
 
@@ -182,7 +187,7 @@ class GpGene implements Gene<GpGene> {
 	}
 
 	public void optimizeTree() {
-		this.optimizeTree(50);
+		this.optimizeTree(70);
 	}
 
 	public void optimizeTree(int iterations) {
@@ -240,19 +245,19 @@ class GpGene implements Gene<GpGene> {
 
 		@Override
 		public List<CoefficientsGene> crossover(CoefficientsGene anotherGene) {
-			List<CoefficientsGene> ret = new LinkedList<GpGene.CoefficientsGene>();
+			List<CoefficientsGene> ret = new ArrayList<GpGene.CoefficientsGene>(2);
 
-			CoefficientsGene crossovered1 = this.clone();
-			CoefficientsGene crossovered2 = anotherGene.clone();
+			CoefficientsGene thisClone = this.clone();
+			CoefficientsGene anotherClone = anotherGene.clone();
 
-			for (int i = 0; i < crossovered1.coefficients.size(); i++) {
-				if (Math.random() > crossovered1.pCrossover) {
-					crossovered1.coefficients.set(i, anotherGene.coefficients.get(i));
-					crossovered2.coefficients.set(i, this.coefficients.get(i));
+			for (int i = 0; i < thisClone.coefficients.size(); i++) {
+				if (GpGene.this.random.nextDouble() > this.pCrossover) {
+					thisClone.coefficients.set(i, anotherGene.coefficients.get(i));
+					anotherClone.coefficients.set(i, this.coefficients.get(i));
 				}
 			}
-			ret.add(crossovered1);
-			ret.add(crossovered2);
+			ret.add(thisClone);
+			ret.add(anotherClone);
 
 			return ret;
 		}
@@ -261,7 +266,7 @@ class GpGene implements Gene<GpGene> {
 		public CoefficientsGene mutate() {
 			CoefficientsGene ret = this.clone();
 			for (int i = 0; i < ret.coefficients.size(); i++) {
-				if (Math.random() > ret.pMutation) {
+				if (GpGene.this.random.nextDouble() > this.pMutation) {
 					double coeff = ret.coefficients.get(i);
 					coeff += GpGene.this.context.getRandomMutationValue();
 					ret.coefficients.set(i, coeff);
@@ -272,7 +277,7 @@ class GpGene implements Gene<GpGene> {
 
 		@Override
 		protected CoefficientsGene clone() {
-			List<Double> ret = new LinkedList<Double>();
+			List<Double> ret = new ArrayList<Double>(this.coefficients.size());
 			for (double d : this.coefficients) {
 				ret.add(d);
 			}

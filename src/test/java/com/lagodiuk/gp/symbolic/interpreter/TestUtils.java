@@ -5,15 +5,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import com.lagodiuk.gp.symbolic.interpreter.Context;
-import com.lagodiuk.gp.symbolic.interpreter.Expression;
-import com.lagodiuk.gp.symbolic.interpreter.Function;
-import com.lagodiuk.gp.symbolic.interpreter.Functions;
-
 public class TestUtils {
 
 	public static Context createContext(Function... functions) {
-		return new Context(listFromArray(functions));
+		return new Context(list(functions), list("x"));
 	}
 
 	public static Expression variableExpr(String x) {
@@ -21,18 +16,18 @@ public class TestUtils {
 	}
 
 	public static Expression constantExpr(double value) {
-		return new Expression(Functions.CONSTANT).setCoefficientsOfNode(listFromArray(value));
+		return new Expression(Functions.CONSTANT).setCoefficientsOfNode(list(value));
 	}
 
 	public static Expression subExpr(Expression left, Expression right) {
-		return new Expression(Functions.SUB).setChilds(listFromArray(left, right));
+		return new Expression(Functions.SUB).setChilds(list(left, right));
 	}
 
 	public static Expression addExpr(Expression left, Expression right) {
-		return new Expression(Functions.ADD).setChilds(listFromArray(left, right));
+		return new Expression(Functions.ADD).setChilds(list(left, right));
 	}
 
-	public static <T> List<T> listFromArray(T... elements) {
+	public static <T> List<T> list(T... elements) {
 		List<T> list = new LinkedList<T>();
 		for (T elem : elements) {
 			list.add(elem);

@@ -22,28 +22,27 @@ public class Context {
 
 	private Map<String, Double> variables = new HashMap<String, Double>();
 
-	private List<Function> allFunctions = new ArrayList<Function>();
+	private List<Function> nonTerminalFunctions = new ArrayList<Function>();
 
 	private List<Function> terminalFunctions = new ArrayList<Function>();
 
 	private int nextRndFunctionIndx = 0;
 
-	public Context(List<Function> functions) {
-		this(functions, Collections.<String> emptyList());
-	}
-
 	public Context(List<? extends Function> functions, Collection<String> variables) {
-		this.allFunctions.addAll(functions);
 		for (Function f : functions) {
 			if (f.argumentsCount() == 0) {
 				this.terminalFunctions.add(f);
+			} else {
+				this.nonTerminalFunctions.add(f);
 			}
 		}
 		if (this.terminalFunctions.isEmpty()) {
 			throw new IllegalArgumentException("At least one terminal function must be defined");
 		}
 
-		Collections.shuffle(this.allFunctions);
+		if (variables.isEmpty()) {
+			throw new IllegalArgumentException("At least one variable must be defined");
+		}
 
 		for (String variable : variables) {
 			this.setVariable(variable, 0);
@@ -58,35 +57,29 @@ public class Context {
 		this.variables.put(variable, value);
 	}
 
-	public void removeVariable(String variable) {
-		this.variables.remove(variable);
-	}
-
-	public void removeAllVariables() {
-		this.variables.clear();
-	}
-
 	public Function getRandomFunction() {
-		if (this.nextRndFunctionIndx >= this.allFunctions.size()) {
+		return this.roundRobinFunctionSelection();
+		// return randomFunctionSelection();
+	}
+
+	private Function randomFunctionSelection() {
+		int indx = this.random.nextInt(this.nonTerminalFunctions.size());
+		return this.nonTerminalFunctions.get(indx);
+	}
+
+	private Function roundRobinFunctionSelection() {
+		if (this.nextRndFunctionIndx >= this.nonTerminalFunctions.size()) {
 			this.nextRndFunctionIndx = 0;
-			Collections.shuffle(this.allFunctions);
+			Collections.shuffle(this.nonTerminalFunctions);
 		}
 		// round-robin like selection
-		return this.allFunctions.get(this.nextRndFunctionIndx++);
+		return this.nonTerminalFunctions.get(this.nextRndFunctionIndx++);
 	}
 
 	public Function getRandomTerminalFunction() {
-		while (true) {
-			int indx = this.random.nextInt(this.terminalFunctions.size());
-			Function f = this.terminalFunctions.get(indx);
-
-			if ((!this.hasVariables()) && (f.isVariable())) {
-				// if context doesn't contain variables
-				continue;
-			}
-
-			return f;
-		}
+		int indx = this.random.nextInt(this.terminalFunctions.size());
+		Function f = this.terminalFunctions.get(indx);
+		return f;
 	}
 
 	public List<Function> getTerminalFunctions() {
@@ -108,14 +101,10 @@ public class Context {
 
 	public double getRandomValue() {
 		return (this.random.nextDouble() * (this.maxValue - this.minValue)) + this.minValue;
-		// return (this.random.nextGaussian() * (this.maxValue - this.minValue))
-		// + this.minValue;
 	}
 
 	public double getRandomMutationValue() {
 		return (this.random.nextDouble() * (this.maxMutationValue - this.minMutationValue)) + this.minMutationValue;
-		// return (this.random.nextGaussian() * (this.maxMutationValue -
-		// this.minMutationValue)) + this.minMutationValue;
 	}
 
 	public boolean hasVariables() {
