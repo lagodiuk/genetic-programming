@@ -58,8 +58,8 @@ public class Context {
 	}
 
 	public Function getRandomNonTerminalFunction() {
-		// return this.roundRobinFunctionSelection();
-		return this.randomFunctionSelection();
+		return this.roundRobinFunctionSelection();
+		// return this.randomFunctionSelection();
 	}
 
 	private Function randomFunctionSelection() {

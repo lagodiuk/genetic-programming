@@ -16,7 +16,7 @@ public class SymbolicRegressionEngine {
 
 	private static final int INITIAL_PARENT_GENES_SURVIVE_COUNT = 1;
 
-	private static final int DEFAULT_POPULATION_SIZE = 7;
+	private static final int DEFAULT_POPULATION_SIZE = 5;
 
 	private static final int MAX_INITIAL_TREE_DEPTH = 1;
 
