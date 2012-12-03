@@ -1,5 +1,6 @@
 package com.lagodiuk.gp.symbolic.interpreter;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -7,9 +8,9 @@ import java.util.List;
 
 public class Expression implements Cloneable {
 
-	private List<Expression> childs = new LinkedList<Expression>();
+	private List<Expression> childs = new ArrayList<Expression>();
 
-	private List<Double> coefficients = new LinkedList<Double>();
+	private List<Double> coefficients = new ArrayList<Double>();
 
 	private String variable;
 

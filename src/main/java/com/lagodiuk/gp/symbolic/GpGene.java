@@ -84,7 +84,7 @@ class GpGene implements Gene<GpGene> {
 
 		Function function = null;
 		if (this.random.nextDouble() > 0.5) {
-			function = this.context.getRandomFunction();
+			function = this.context.getRandomNonTerminalFunction();
 		} else {
 			function = this.context.getRandomTerminalFunction();
 		}
@@ -100,7 +100,7 @@ class GpGene implements Gene<GpGene> {
 
 		if (functionArgumentsCount > mutatingNodeChildsCount) {
 			for (int i = 0; i < ((functionArgumentsCount - mutatingNodeChildsCount) + 1); i++) {
-				mutatingNode.getChilds().add(SyntaxTreeUtils.createTree(0, this.context));
+				mutatingNode.getChilds().add(SyntaxTreeUtils.createTree(1, this.context));
 			}
 		} else if (functionArgumentsCount < mutatingNodeChildsCount) {
 			List<Expression> subList = new ArrayList<Expression>(functionArgumentsCount);
@@ -170,11 +170,6 @@ class GpGene implements Gene<GpGene> {
 	private Expression getRandomNode(Expression tree) {
 		List<Expression> allNodesOfTree = tree.getAllNodesAsList();
 		int allNodesOfTreeCount = allNodesOfTree.size();
-
-		// if ((allNodesOfTreeCount >= 7) && (Math.random() > 0.7)) {
-		// allNodesOfTreeCount = allNodesOfTreeCount / 2;
-		// }
-
 		int indx = this.random.nextInt(allNodesOfTreeCount);
 		return allNodesOfTree.get(indx);
 	}

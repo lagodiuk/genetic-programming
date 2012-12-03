@@ -7,7 +7,13 @@ public class SyntaxTreeUtils {
 	public static Expression createTree(int depth, Context context) {
 		if (depth > 0) {
 
-			Function f = context.getRandomFunction();
+			Function f;
+			if (Math.random() >= 0.5) {
+				f = context.getRandomNonTerminalFunction();
+			} else {
+				f = context.getRandomTerminalFunction();
+			}
+
 			Expression expr = new Expression(f);
 
 			if (f.argumentsCount() > 0) {
@@ -80,10 +86,14 @@ public class SyntaxTreeUtils {
 				cutTree(child, context, depth - 1);
 			}
 		} else {
-			int childsCount = tree.getChilds().size();
 			tree.removeChilds();
-			for (int i = 0; i < childsCount; i++) {
-				tree.addChild(createTree(0, context));
+			tree.removeCoefficients();
+			Function func = context.getRandomTerminalFunction();
+			tree.setFunction(func);
+			if (func.isVariable()) {
+				tree.setVariable(context.getRandomVariableName());
+			} else {
+				tree.addCoefficient(context.getRandomValue());
 			}
 		}
 	}
@@ -104,5 +114,4 @@ public class SyntaxTreeUtils {
 
 		return ret;
 	}
-
 }

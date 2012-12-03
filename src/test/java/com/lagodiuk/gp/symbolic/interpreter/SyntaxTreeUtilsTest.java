@@ -13,11 +13,6 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import com.lagodiuk.gp.symbolic.interpreter.Context;
-import com.lagodiuk.gp.symbolic.interpreter.Expression;
-import com.lagodiuk.gp.symbolic.interpreter.Functions;
-import com.lagodiuk.gp.symbolic.interpreter.SyntaxTreeUtils;
-
 public class SyntaxTreeUtilsTest {
 
 	@Test
@@ -31,12 +26,12 @@ public class SyntaxTreeUtilsTest {
 
 		Expression complexExpr = addExpr(varX, subExpr(const3, addExpr(const1, const2)));
 		assertEquals("(x + (3.0 - (1.0 + 2.0)))", complexExpr.print());
-		assertTrue(calculateDepth(complexExpr) == 2);
+		assertTrue(calculateDepth(complexExpr) == 3);
 
 		Expression simplifiedExpr = complexExpr.clone();
 		SyntaxTreeUtils.simplifyTree(simplifiedExpr, context);
 		assertEquals("(x + 0.0)", simplifiedExpr.print());
-		assertTrue(calculateDepth(simplifiedExpr) == 0);
+		assertTrue(calculateDepth(simplifiedExpr) == 1);
 	}
 
 	@Test
@@ -71,7 +66,7 @@ public class SyntaxTreeUtilsTest {
 
 		Expression complexExpr = addExpr(varX, subExpr(const3, addExpr(const1, subExpr(const4, const2))));
 		assertEquals("(x + (3.0 - (1.0 + (4.0 - 2.0))))", complexExpr.print());
-		assertTrue(calculateDepth(complexExpr) == 3);
+		assertTrue(calculateDepth(complexExpr) == 4);
 
 		Expression cutExpr = complexExpr.clone();
 		SyntaxTreeUtils.cutTree(cutExpr, context, 1);
@@ -93,7 +88,7 @@ public class SyntaxTreeUtilsTest {
 			}
 
 			Set<Integer> target = new HashSet<Integer>();
-			for (int i = -1; i < maxDepth; i++) {
+			for (int i = 0; i < (maxDepth + 1); i++) {
 				target.add(i);
 			}
 
@@ -103,19 +98,15 @@ public class SyntaxTreeUtilsTest {
 		}
 	}
 
-	/**
-	 * depth except of root and leaves <br/>
-	 * returns -1 if root is terminal node
-	 */
 	private static int calculateDepth(Expression root) {
-		return fullDepth(root) - 2;
+		return calculateNodeLevels(root) - 1;
 	}
 
-	private static int fullDepth(Expression root) {
+	private static int calculateNodeLevels(Expression root) {
 		int depth = 0;
 		if (!root.getChilds().isEmpty()) {
 			for (Expression child : root.getChilds()) {
-				depth = Math.max(depth, fullDepth(child));
+				depth = Math.max(depth, calculateNodeLevels(child));
 			}
 		}
 		return depth + 1;

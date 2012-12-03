@@ -57,9 +57,9 @@ public class Context {
 		this.variables.put(variable, value);
 	}
 
-	public Function getRandomFunction() {
-		return this.roundRobinFunctionSelection();
-		// return randomFunctionSelection();
+	public Function getRandomNonTerminalFunction() {
+		// return this.roundRobinFunctionSelection();
+		return this.randomFunctionSelection();
 	}
 
 	private Function randomFunctionSelection() {
