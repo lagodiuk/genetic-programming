@@ -127,8 +127,10 @@ class GpGene implements Gene<GpGene> {
 
 	private void mutateByReverseOfChildsList() {
 		Expression mutatingNode = this.getRandomNode(this.syntaxTree);
+		Function mutatingNodeFunction = mutatingNode.getFunction();
 
-		if (mutatingNode.getChilds().size() > 1) {
+		if ((mutatingNode.getChilds().size() > 1)
+				&& (!mutatingNodeFunction.isCommutative())) {
 
 			Collections.reverse(mutatingNode.getChilds());
 

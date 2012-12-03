@@ -12,6 +12,8 @@ public interface Function {
 
 	boolean isNumber();
 
+	boolean isCommutative();
+
 	String print(Expression expression);
 
 	List<Double> getCoefficients(Expression expression);

@@ -37,6 +37,11 @@ public enum Functions implements Function {
 		}
 
 		@Override
+		public boolean isCommutative() {
+			return true;
+		}
+
+		@Override
 		public double eval(Expression expression, Context context) {
 			return expression.getCoefficientsOfNode().get(0);
 		}
@@ -92,6 +97,11 @@ public enum Functions implements Function {
 		}
 
 		@Override
+		public boolean isCommutative() {
+			return true;
+		}
+
+		@Override
 		public double eval(Expression expression, Context context) {
 			return context.lookupVariable(expression.getVariable());
 		}
@@ -132,6 +142,11 @@ public enum Functions implements Function {
 		@Override
 		public boolean isNumber() {
 			return false;
+		}
+
+		@Override
+		public boolean isCommutative() {
+			return true;
 		}
 
 		@Override
@@ -180,6 +195,11 @@ public enum Functions implements Function {
 
 		@Override
 		public boolean isNumber() {
+			return false;
+		}
+
+		@Override
+		public boolean isCommutative() {
 			return false;
 		}
 
@@ -234,6 +254,11 @@ public enum Functions implements Function {
 		}
 
 		@Override
+		public boolean isCommutative() {
+			return true;
+		}
+
+		@Override
 		public double eval(Expression expression, Context context) {
 			List<Expression> childs = expression.getChilds();
 			double left = childs.get(0).eval(context);
@@ -280,6 +305,11 @@ public enum Functions implements Function {
 
 		@Override
 		public boolean isNumber() {
+			return false;
+		}
+
+		@Override
+		public boolean isCommutative() {
 			return false;
 		}
 
@@ -334,6 +364,11 @@ public enum Functions implements Function {
 		}
 
 		@Override
+		public boolean isCommutative() {
+			return true;
+		}
+
+		@Override
 		public double eval(Expression expression, Context context) {
 			List<Expression> childs = expression.getChilds();
 			double arg = childs.get(0).eval(context);
@@ -379,6 +414,11 @@ public enum Functions implements Function {
 
 		@Override
 		public boolean isNumber() {
+			return false;
+		}
+
+		@Override
+		public boolean isCommutative() {
 			return false;
 		}
 
@@ -436,6 +476,11 @@ public enum Functions implements Function {
 		}
 
 		@Override
+		public boolean isCommutative() {
+			return true;
+		}
+
+		@Override
 		public double eval(Expression expression, Context context) {
 			List<Expression> childs = expression.getChilds();
 			double arg = childs.get(0).eval(context);
@@ -485,6 +530,11 @@ public enum Functions implements Function {
 		}
 
 		@Override
+		public boolean isCommutative() {
+			return true;
+		}
+
+		@Override
 		public double eval(Expression expression, Context context) {
 			List<Expression> childs = expression.getChilds();
 			double arg = childs.get(0).eval(context);
@@ -531,6 +581,11 @@ public enum Functions implements Function {
 		@Override
 		public boolean isNumber() {
 			return false;
+		}
+
+		@Override
+		public boolean isCommutative() {
+			return true;
 		}
 
 		@Override

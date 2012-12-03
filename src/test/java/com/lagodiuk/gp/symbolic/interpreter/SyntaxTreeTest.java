@@ -13,11 +13,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.lagodiuk.gp.symbolic.interpreter.Context;
-import com.lagodiuk.gp.symbolic.interpreter.Expression;
-import com.lagodiuk.gp.symbolic.interpreter.Function;
-import com.lagodiuk.gp.symbolic.interpreter.Functions;
-
 public class SyntaxTreeTest {
 
 	@Test
@@ -186,6 +181,11 @@ public class SyntaxTreeTest {
 		@Override
 		public boolean isNumber() {
 			return false;
+		}
+
+		@Override
+		public boolean isCommutative() {
+			return true;
 		}
 
 		@Override
