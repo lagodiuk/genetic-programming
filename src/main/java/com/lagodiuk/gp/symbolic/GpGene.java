@@ -59,7 +59,7 @@ class GpGene implements Gene<GpGene> {
 	public GpGene mutate() {
 		GpGene ret = new GpGene(this.context, this.fitnessFunction, this.syntaxTree.clone());
 
-		int type = this.random.nextInt(4);
+		int type = this.random.nextInt(6);
 		switch (type) {
 			case 0:
 				ret.mutateByRandomChangeOfFunction();
@@ -68,15 +68,34 @@ class GpGene implements Gene<GpGene> {
 				ret.mutateByRandomChangeOfChild();
 				break;
 			case 2:
-				ret.mutateByReverseOfChildsList();
+				ret.mutateByRandomChangeOfNodeToChild();
 				break;
 			case 3:
-				ret.mutateByRandomChangeOfNodeToChild();
+				ret.mutateByReverseOfChildsList();
+				break;
+			case 4:
+				ret.mutateByRootGrowth();
+				break;
+			case 5:
+				ret.syntaxTree = SyntaxTreeUtils.createTree(2, this.context);
 				break;
 		}
 
 		ret.optimizeTree();
 		return ret;
+	}
+
+	private void mutateByRootGrowth() {
+		Function function = this.context.getRandomNonTerminalFunction();
+		Expression newRoot = new Expression(function);
+		newRoot.addChild(this.syntaxTree);
+		for (int i = 1; i < function.argumentsCount(); i++) {
+			newRoot.addChild(SyntaxTreeUtils.createTree(0, this.context));
+		}
+		for (int i = 0; i < function.argumentsCount(); i++) {
+			newRoot.addCoefficient(this.context.getRandomValue());
+		}
+		this.syntaxTree = newRoot;
 	}
 
 	private void mutateByRandomChangeOfFunction() {
