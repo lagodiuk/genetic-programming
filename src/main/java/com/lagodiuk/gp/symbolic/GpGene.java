@@ -80,7 +80,7 @@ class GpGene implements Gene<GpGene> {
 				ret.syntaxTree = SyntaxTreeUtils.createTree(2, this.context);
 				break;
 			case 6:
-				this.mutateByReplaceEntireTreeWithAnySubTree();
+				ret.mutateByReplaceEntireTreeWithAnySubTree();
 				break;
 		}
 
