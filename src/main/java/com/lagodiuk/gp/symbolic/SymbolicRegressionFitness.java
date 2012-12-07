@@ -4,7 +4,7 @@ import com.lagodiuk.ga.Fitness;
 import com.lagodiuk.gp.symbolic.interpreter.Context;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
 
-class SymbolicRegressionFitness implements Fitness<GpGene, Double> {
+class SymbolicRegressionFitness implements Fitness<GpChromosome, Double> {
 
 	private ExpressionFitness expressionFitness;
 
@@ -13,9 +13,9 @@ class SymbolicRegressionFitness implements Fitness<GpGene, Double> {
 	}
 
 	@Override
-	public Double calculate(GpGene gene) {
-		Expression expression = gene.getSyntaxTree();
-		Context context = gene.getContext();
+	public Double calculate(GpChromosome chromosome) {
+		Expression expression = chromosome.getSyntaxTree();
+		Context context = chromosome.getContext();
 		return this.expressionFitness.fitness(expression, context);
 	}
 

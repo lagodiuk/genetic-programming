@@ -5,37 +5,37 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import com.lagodiuk.ga.Chromosome;
 import com.lagodiuk.ga.Environment;
 import com.lagodiuk.ga.Fitness;
-import com.lagodiuk.ga.Gene;
 import com.lagodiuk.ga.Population;
 import com.lagodiuk.gp.symbolic.interpreter.Context;
 import com.lagodiuk.gp.symbolic.interpreter.Expression;
 import com.lagodiuk.gp.symbolic.interpreter.Function;
 import com.lagodiuk.gp.symbolic.interpreter.SyntaxTreeUtils;
 
-class GpGene implements Gene<GpGene> {
+class GpChromosome implements Chromosome<GpChromosome> {
 
 	private Expression syntaxTree;
 
 	private Context context;
 
-	private Fitness<GpGene, Double> fitnessFunction;
+	private Fitness<GpChromosome, Double> fitnessFunction;
 
 	private Random random = new Random();
 
-	public GpGene(Context context, Fitness<GpGene, Double> fitnessFunction, Expression syntaxTree) {
+	public GpChromosome(Context context, Fitness<GpChromosome, Double> fitnessFunction, Expression syntaxTree) {
 		this.context = context;
 		this.fitnessFunction = fitnessFunction;
 		this.syntaxTree = syntaxTree;
 	}
 
 	@Override
-	public List<GpGene> crossover(GpGene anotherGene) {
-		List<GpGene> ret = new ArrayList<GpGene>(2);
+	public List<GpChromosome> crossover(GpChromosome anotherChromosome) {
+		List<GpChromosome> ret = new ArrayList<GpChromosome>(2);
 
-		GpGene thisClone = new GpGene(this.context, this.fitnessFunction, this.syntaxTree.clone());
-		GpGene anotherClone = new GpGene(this.context, this.fitnessFunction, anotherGene.syntaxTree.clone());
+		GpChromosome thisClone = new GpChromosome(this.context, this.fitnessFunction, this.syntaxTree.clone());
+		GpChromosome anotherClone = new GpChromosome(this.context, this.fitnessFunction, anotherChromosome.syntaxTree.clone());
 
 		Expression thisRandomNode = this.getRandomNode(thisClone.syntaxTree);
 		Expression anotherRandomNode = this.getRandomNode(anotherClone.syntaxTree);
@@ -56,8 +56,8 @@ class GpGene implements Gene<GpGene> {
 	}
 
 	@Override
-	public GpGene mutate() {
-		GpGene ret = new GpGene(this.context, this.fitnessFunction, this.syntaxTree.clone());
+	public GpChromosome mutate() {
+		GpChromosome ret = new GpChromosome(this.context, this.fitnessFunction, this.syntaxTree.clone());
 
 		int type = this.random.nextInt(7);
 		switch (type) {
@@ -221,16 +221,16 @@ class GpGene implements Gene<GpGene> {
 		List<Double> coefficientsOfTree = this.syntaxTree.getCoefficientsOfTree();
 
 		if (coefficientsOfTree.size() > 0) {
-			CoefficientsGene initialGene = new CoefficientsGene(coefficientsOfTree, 0.6, 0.8);
-			Population<CoefficientsGene> population = new Population<CoefficientsGene>();
+			CoefficientsChromosome initialChromosome = new CoefficientsChromosome(coefficientsOfTree, 0.6, 0.8);
+			Population<CoefficientsChromosome> population = new Population<CoefficientsChromosome>();
 			for (int i = 0; i < 5; i++) {
-				population.addGene(initialGene.mutate());
+				population.addChromosome(initialChromosome.mutate());
 			}
-			population.addGene(initialGene);
+			population.addChromosome(initialChromosome);
 
-			Fitness<CoefficientsGene, Double> fit = new CoefficientsFitness();
+			Fitness<CoefficientsChromosome, Double> fit = new CoefficientsFitness();
 
-			Environment<CoefficientsGene, Double> env = new Environment<GpGene.CoefficientsGene, Double>(population, fit);
+			Environment<CoefficientsChromosome, Double> env = new Environment<GpChromosome.CoefficientsChromosome, Double>(population, fit);
 
 			env.iterate(iterations);
 
@@ -252,7 +252,7 @@ class GpGene implements Gene<GpGene> {
 		return this.syntaxTree;
 	}
 
-	private class CoefficientsGene implements Gene<CoefficientsGene>, Cloneable {
+	private class CoefficientsChromosome implements Chromosome<CoefficientsChromosome>, Cloneable {
 
 		private double pMutation;
 
@@ -260,22 +260,22 @@ class GpGene implements Gene<GpGene> {
 
 		private List<Double> coefficients;
 
-		public CoefficientsGene(List<Double> coefficients, double pMutation, double pCrossover) {
+		public CoefficientsChromosome(List<Double> coefficients, double pMutation, double pCrossover) {
 			this.coefficients = coefficients;
 			this.pMutation = pMutation;
 			this.pCrossover = pCrossover;
 		}
 
 		@Override
-		public List<CoefficientsGene> crossover(CoefficientsGene anotherGene) {
-			List<CoefficientsGene> ret = new ArrayList<GpGene.CoefficientsGene>(2);
+		public List<CoefficientsChromosome> crossover(CoefficientsChromosome anotherChromosome) {
+			List<CoefficientsChromosome> ret = new ArrayList<GpChromosome.CoefficientsChromosome>(2);
 
-			CoefficientsGene thisClone = this.clone();
-			CoefficientsGene anotherClone = anotherGene.clone();
+			CoefficientsChromosome thisClone = this.clone();
+			CoefficientsChromosome anotherClone = anotherChromosome.clone();
 
 			for (int i = 0; i < thisClone.coefficients.size(); i++) {
-				if (GpGene.this.random.nextDouble() > this.pCrossover) {
-					thisClone.coefficients.set(i, anotherGene.coefficients.get(i));
+				if (GpChromosome.this.random.nextDouble() > this.pCrossover) {
+					thisClone.coefficients.set(i, anotherChromosome.coefficients.get(i));
 					anotherClone.coefficients.set(i, this.coefficients.get(i));
 				}
 			}
@@ -286,12 +286,12 @@ class GpGene implements Gene<GpGene> {
 		}
 
 		@Override
-		public CoefficientsGene mutate() {
-			CoefficientsGene ret = this.clone();
+		public CoefficientsChromosome mutate() {
+			CoefficientsChromosome ret = this.clone();
 			for (int i = 0; i < ret.coefficients.size(); i++) {
-				if (GpGene.this.random.nextDouble() > this.pMutation) {
+				if (GpChromosome.this.random.nextDouble() > this.pMutation) {
 					double coeff = ret.coefficients.get(i);
-					coeff += GpGene.this.context.getRandomMutationValue();
+					coeff += GpChromosome.this.context.getRandomMutationValue();
 					ret.coefficients.set(i, coeff);
 				}
 			}
@@ -299,12 +299,12 @@ class GpGene implements Gene<GpGene> {
 		}
 
 		@Override
-		protected CoefficientsGene clone() {
+		protected CoefficientsChromosome clone() {
 			List<Double> ret = new ArrayList<Double>(this.coefficients.size());
 			for (double d : this.coefficients) {
 				ret.add(d);
 			}
-			return new CoefficientsGene(ret, this.pMutation, this.pCrossover);
+			return new CoefficientsChromosome(ret, this.pMutation, this.pCrossover);
 		}
 
 		public List<Double> getCoefficients() {
@@ -313,12 +313,12 @@ class GpGene implements Gene<GpGene> {
 
 	}
 
-	private class CoefficientsFitness implements Fitness<CoefficientsGene, Double> {
+	private class CoefficientsFitness implements Fitness<CoefficientsChromosome, Double> {
 
 		@Override
-		public Double calculate(CoefficientsGene gene) {
-			GpGene.this.syntaxTree.setCoefficientsOfTree(gene.getCoefficients());
-			return GpGene.this.fitnessFunction.calculate(GpGene.this);
+		public Double calculate(CoefficientsChromosome chromosome) {
+			GpChromosome.this.syntaxTree.setCoefficientsOfTree(chromosome.getCoefficients());
+			return GpChromosome.this.fitnessFunction.calculate(GpChromosome.this);
 		}
 
 	}
