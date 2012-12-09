@@ -27,6 +27,10 @@ public class TestUtils {
 		return new Expression(Functions.ADD).setChilds(list(left, right));
 	}
 
+	public static Expression powExpr(Expression left, Expression right) {
+		return new Expression(Functions.POW).setChilds(list(left, right));
+	}
+
 	public static <T> List<T> list(T... elements) {
 		List<T> list = new LinkedList<T>();
 		for (T elem : elements) {

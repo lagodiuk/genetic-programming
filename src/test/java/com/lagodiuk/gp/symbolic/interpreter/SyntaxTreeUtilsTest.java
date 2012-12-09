@@ -3,6 +3,7 @@ package com.lagodiuk.gp.symbolic.interpreter;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.addExpr;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.constantExpr;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.createContext;
+import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.powExpr;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.subExpr;
 import static com.lagodiuk.gp.symbolic.interpreter.TestUtils.variableExpr;
 import static org.junit.Assert.assertEquals;
@@ -52,6 +53,15 @@ public class SyntaxTreeUtilsTest {
 		Expression simplifiedExpr = complexExpr.clone();
 		SyntaxTreeUtils.simplifyTree(simplifiedExpr, context);
 		assertEquals("((10.0 + (5.0 + x)) + 0.0)", simplifiedExpr.print());
+	}
+
+	@Test
+	public void simplifyTreeTest3() {
+		Context context = createContext(Functions.values());
+		Expression powExpr = powExpr(constantExpr(2), constantExpr(3));
+		assertEquals("(2.0 ^ 3.0)", powExpr.print());
+		SyntaxTreeUtils.simplifyTree(powExpr, context);
+		assertEquals("8.0", powExpr.print());
 	}
 
 	@Test
