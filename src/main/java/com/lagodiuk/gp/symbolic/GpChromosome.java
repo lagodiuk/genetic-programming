@@ -108,20 +108,31 @@ class GpChromosome implements Chromosome<GpChromosome> {
 	private void mutateByRandomChangeOfFunction() {
 		Expression mutatingNode = this.getRandomNode(this.syntaxTree);
 
-		Function function = null;
-		if (this.random.nextDouble() > 0.5) {
-			function = this.context.getRandomNonTerminalFunction();
-		} else {
-			function = this.context.getRandomTerminalFunction();
+		Function oldFunction = mutatingNode.getFunction();
+		Function newFunction = null;
+
+		// trying to avoid case, when newFunction == oldFunction
+		// hope, that in one of 3 iterations - we'll get
+		// newFunction which != oldFunction
+		for (int i = 0; i < 3; i++) {
+			if (this.random.nextDouble() > 0.5) {
+				newFunction = this.context.getRandomNonTerminalFunction();
+			} else {
+				newFunction = this.context.getRandomTerminalFunction();
+			}
+
+			if (newFunction != oldFunction) {
+				break;
+			}
 		}
 
-		mutatingNode.setFunction(function);
+		mutatingNode.setFunction(newFunction);
 
-		if (function.isVariable()) {
+		if (newFunction.isVariable()) {
 			mutatingNode.setVariable(this.context.getRandomVariableName());
 		}
 
-		int functionArgumentsCount = function.argumentsCount();
+		int functionArgumentsCount = newFunction.argumentsCount();
 		int mutatingNodeChildsCount = mutatingNode.getChilds().size();
 
 		if (functionArgumentsCount > mutatingNodeChildsCount) {
@@ -136,7 +147,7 @@ class GpChromosome implements Chromosome<GpChromosome> {
 			mutatingNode.setChilds(subList);
 		}
 
-		int functionCoefficientsCount = function.coefficientsCount();
+		int functionCoefficientsCount = newFunction.coefficientsCount();
 		int mutatingNodeCoefficientsCount = mutatingNode.getCoefficientsOfNode().size();
 		if (functionCoefficientsCount > mutatingNodeCoefficientsCount) {
 			for (int i = 0; i < ((functionCoefficientsCount - mutatingNodeCoefficientsCount) + 1); i++) {
