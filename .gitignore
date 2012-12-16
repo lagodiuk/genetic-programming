@@ -2,14 +2,12 @@
 # Java
 #
 *.class
-*.jar
 
 
 #
 # Compiled files directory
 #
 target/
-bin/
 
 #
 # Eclipse
