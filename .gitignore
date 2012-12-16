@@ -2,7 +2,7 @@
 # Java
 #
 *.class
-
+*.jar
 
 #
 # Compiled files directory
