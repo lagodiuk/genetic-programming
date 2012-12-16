@@ -43,7 +43,7 @@
 					</archive>
 					<outputDirectory>${project.basedir}/bin</outputDirectory>
 					<appendAssemblyId>false</appendAssemblyId>
-					<finalName>symbolic_regression_${version}</finalName>
+					<finalName>symbolic_regression_${project.version}</finalName>
 				</configuration>
 				<executions>
 					<execution>
