@@ -3,9 +3,8 @@ package com.lagodiuk.gp.symbolic.example;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -23,8 +22,12 @@ import com.lagodiuk.gp.symbolic.interpreter.Functions;
 
 public class Main {
 
+	private static FileInputStream fileIn;
+
+	private static PrintWriter fileOut;
+
 	public static void main(String[] args) throws Exception {
-		setSystemInputOutput(args);
+		configureInputOutput(args);
 		BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
 
 		List<Function> functions = getFunctions(inputReader);
@@ -42,11 +45,11 @@ public class Main {
 				Expression bestSyntaxTree = engine.getBestSyntaxTree();
 				double currFitValue = engine.fitness(bestSyntaxTree);
 				if (Double.compare(currFitValue, this.prevFitValue) != 0) {
-					System.out.println();
-					System.out.println(prefix + bestSyntaxTree.print());
+					outPrintln();
+					outPrintln(prefix + bestSyntaxTree.print());
 				}
 
-				System.out.println(String.format("%s \t %s", engine.getIteration(), currFitValue));
+				outPrintln(String.format("%s \t %s", engine.getIteration(), currFitValue));
 				this.prevFitValue = currFitValue;
 				if (currFitValue < 10) {
 					engine.terminate();
@@ -54,17 +57,19 @@ public class Main {
 			}
 		});
 
-		System.out.println();
-		System.out.println(String.format("Start time is: %s", new Date()));
+		outPrintln();
+		outPrintln(String.format("Start time is: %s", new Date()));
 
 		engine.evolve(200);
 
-		System.out.println();
-		System.out.println("Best function is:");
-		System.out.println(prefix + engine.getBestSyntaxTree().print());
-		System.out.println();
-		System.out.println(String.format("End time is: %s", new Date()));
-		System.out.println();
+		outPrintln();
+		outPrintln("Best function is:");
+		outPrintln(prefix + engine.getBestSyntaxTree().print());
+		outPrintln();
+		outPrintln(String.format("End time is: %s", new Date()));
+		outPrintln();
+
+		closeInOut();
 	}
 
 	private static String makePrefix(List<String> variables) {
@@ -130,16 +135,40 @@ public class Main {
 		return new TabulatedFunctionFitness(targets);
 	}
 
-	private static void setSystemInputOutput(String[] args) throws FileNotFoundException {
+	private static void configureInputOutput(String[] args) throws FileNotFoundException {
 		switch (args.length) {
 			case 1:
-				System.setIn(new FileInputStream(args[0]));
+				fileIn = new FileInputStream(args[0]);
+				System.setIn(fileIn);
 				break;
 
 			case 2:
 				System.setIn(new FileInputStream(args[0]));
-				System.setOut(new PrintStream(new FileOutputStream(args[1]), true));
+				fileOut = new PrintWriter(args[1]);
 				break;
+		}
+	}
+
+	private static void outPrintln() {
+		System.out.println();
+		if (fileOut != null) {
+			fileOut.println();
+		}
+	}
+
+	private static void outPrintln(String message) {
+		System.out.println(message);
+		if (fileOut != null) {
+			fileOut.println(message);
+		}
+	}
+
+	private static void closeInOut() throws Exception {
+		if (fileIn != null) {
+			fileIn.close();
+		}
+		if (fileOut != null) {
+			fileOut.close();
 		}
 	}
 
