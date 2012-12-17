@@ -1,4 +1,4 @@
-package com.lagodiuk.gp.example;
+package com.lagodiuk.gp.symbolic.example;
 
 import java.util.LinkedList;
 import java.util.List;

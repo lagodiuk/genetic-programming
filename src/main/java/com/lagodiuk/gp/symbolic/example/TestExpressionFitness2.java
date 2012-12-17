@@ -1,4 +1,4 @@
-package com.lagodiuk.gp.example;
+package com.lagodiuk.gp.symbolic.example;
 
 import com.lagodiuk.gp.symbolic.ExpressionFitness;
 import com.lagodiuk.gp.symbolic.interpreter.Context;

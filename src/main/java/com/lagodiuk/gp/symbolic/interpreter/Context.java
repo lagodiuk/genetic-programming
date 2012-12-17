@@ -62,10 +62,10 @@ public class Context {
 		// return this.randomFunctionSelection();
 	}
 
-	private Function randomFunctionSelection() {
-		int indx = this.random.nextInt(this.nonTerminalFunctions.size());
-		return this.nonTerminalFunctions.get(indx);
-	}
+	// private Function randomFunctionSelection() {
+	// int indx = this.random.nextInt(this.nonTerminalFunctions.size());
+	// return this.nonTerminalFunctions.get(indx);
+	// }
 
 	private Function roundRobinFunctionSelection() {
 		if (this.nextRndFunctionIndx >= this.nonTerminalFunctions.size()) {
