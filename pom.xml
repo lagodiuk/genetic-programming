@@ -38,7 +38,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>com.lagodiuk.gp.example.Launcher2</mainClass>
+							<mainClass>com.lagodiuk.gp.symbolic.example.Main</mainClass>
 						</manifest>
 					</archive>
 					<outputDirectory>${project.basedir}/bin</outputDirectory>
