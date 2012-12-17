@@ -1,12 +1,16 @@
-# functions
-# ADD SUB MUL DIV SQRT POW LN SIN COS
+# possible functions are: ADD SUB MUL DIV SQRT POW LN SIN COS
+# set which functions to use:
+
 ADD MUL SUB
 
-# variables
-x	y	z
+# define variables:
 
-26	35	1	830
-8	24	-11	130
-20	1	10	477
-33	11	2	1217
-37	16	7	1524
+x y z
+
+# define training set:
+
+f(26, 35, 1) = 830
+f(8, 24, -11) = 130
+f(20, 1, 10) = 477
+f(33, 11, 2) = 1217
+f(37, 16, 7) = 1524

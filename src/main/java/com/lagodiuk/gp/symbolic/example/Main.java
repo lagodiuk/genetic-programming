@@ -120,14 +120,20 @@ public class Main {
 				continue;
 			}
 
-			String[] values = s.split("\\s+");
+			String[] split = s.split("=");
+			String left = split[1].trim();
+			String right = split[0].trim();
+			right = right.replaceAll("f\\((.*)\\)", "$1");
+
+			double targetValue = Double.parseDouble(left);
+
+			String[] values = right.split("\\,");
 			Target target = new Target();
 			for (int i = 0; i < variablesCount; i++) {
-				double value = Double.parseDouble(values[i]);
+				double value = Double.parseDouble(values[i].trim());
 				target.when(variables.get(i), value);
 			}
-			double value = Double.parseDouble(values[variablesCount]);
-			target.targetIs(value);
+			target.targetIs(targetValue);
 			targets.add(target);
 
 			s = inputReader.readLine();
