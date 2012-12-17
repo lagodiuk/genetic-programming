@@ -1,0 +1,21 @@
+# functions
+# ADD SUB MUL DIV SQRT POW LN SIN COS
+ADD MUL SUB DIV
+
+# variables
+x 	y
+
+1	1	2
+1	2	5
+5	5	50
+-5	5	50
+5	-5	50
+-5	-5	50
+10	10	200
+-10	10	200
+10	-10	200
+-10	-10	200
+0	0	0
+0	5	25
+5	0	25
+3	3	18
