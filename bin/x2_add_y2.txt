@@ -1,11 +1,11 @@
-# possible functions are: ADD SUB MUL DIV SQRT POW LN SIN COS
+# allowed functions are: ADD SUB MUL DIV SQRT POW LN SIN COS
 # set which functions to use:
 
 ADD MUL SUB DIV
 
-# define variables:
+# looking for:
 
-x 	y
+f(x, y) - ?
 
 # define training set:
 

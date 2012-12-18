@@ -84,8 +84,9 @@ public class Main {
 		while ((s.startsWith("#")) || (s.trim().isEmpty())) {
 			s = inputReader.readLine();
 		}
-		for (String variableName : s.split("\\s+")) {
-			variables.add(variableName);
+		s = s.replaceAll("f\\((.*)\\).*", "$1").trim();
+		for (String variableName : s.split("\\,")) {
+			variables.add(variableName.trim());
 		}
 		return variables;
 	}
