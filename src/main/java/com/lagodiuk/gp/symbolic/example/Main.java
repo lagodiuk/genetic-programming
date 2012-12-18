@@ -26,9 +26,13 @@ public class Main {
 
 	private static PrintWriter fileOut;
 
+	private static int iteration = 1;
+
+	private static boolean evolved = false;
+
 	public static void main(String[] args) throws Exception {
 		configureInputOutput(args);
-		BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader inputReader = new BufferedReader(new InputStreamReader(fileIn));
 
 		List<Function> functions = getFunctions(inputReader);
 		List<String> variables = getVariables(inputReader);
@@ -49,10 +53,12 @@ public class Main {
 					outPrintln(prefix + bestSyntaxTree.print());
 				}
 
-				outPrintln(String.format("%s \t %s", engine.getIteration(), currFitValue));
+				outPrintln(String.format("%s \t %s", iteration, currFitValue));
+				++iteration;
 				this.prevFitValue = currFitValue;
 				if (currFitValue < 10) {
 					engine.terminate();
+					evolved = true;
 				}
 			}
 		});
@@ -60,7 +66,21 @@ public class Main {
 		outPrintln();
 		outPrintln(String.format("Start time is: %s", new Date()));
 
-		engine.evolve(200);
+		BufferedReader systemIn = new BufferedReader(new InputStreamReader(System.in));
+		while (true) {
+			engine.evolve(50);
+			boolean terminate = true;
+			if (!evolved) {
+				System.out.println("Continue? (50 iterations) Y/N (don't forget to press Enter)");
+				String s = systemIn.readLine();
+				if ("y".equalsIgnoreCase(s)) {
+					terminate = false;
+				}
+			}
+			if (terminate) {
+				break;
+			}
+		}
 
 		outPrintln();
 		outPrintln("Best function is:");
@@ -146,11 +166,10 @@ public class Main {
 		switch (args.length) {
 			case 1:
 				fileIn = new FileInputStream(args[0]);
-				System.setIn(fileIn);
 				break;
 
 			case 2:
-				System.setIn(new FileInputStream(args[0]));
+				fileIn = new FileInputStream(args[0]);
 				fileOut = new PrintWriter(args[1]);
 				break;
 		}
