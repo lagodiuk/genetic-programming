@@ -1,0 +1,18 @@
+# allowed functions are: ADD SUB MUL DIV SQRT POW LN SIN COS
+# set which functions to use:
+
+ADD MUL SUB POW DIV
+
+# looking for:
+
+f(x) - ?
+
+# define training set:
+
+f(-100) = -1700000
+f(-90) = -1296000
+f(-80) = -960000
+f(-70) = -686000
+f(-60) = -468000
+f(-50) = -300000
+f(-40) = -176000
