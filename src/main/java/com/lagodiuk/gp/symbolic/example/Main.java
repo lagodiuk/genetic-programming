@@ -30,14 +30,17 @@ public class Main {
 
 	private static boolean evolved = false;
 
+	private static double threshold = 10;
+
 	public static void main(String[] args) throws Exception {
+		System.out.println("Symbolic regression solver");
+
 		configureInputOutput(args);
 		BufferedReader inputReader = new BufferedReader(new InputStreamReader(fileIn));
 
 		List<Function> functions = getFunctions(inputReader);
 		List<String> variables = getVariables(inputReader);
 		TabulatedFunctionFitness fitness = getTrainingData(inputReader, variables);
-		final double threshold = getThreshold(inputReader);
 
 		SymbolicRegressionEngine engine = new SymbolicRegressionEngine(fitness, variables, functions);
 
@@ -142,6 +145,13 @@ public class Main {
 				continue;
 			}
 
+			if (s.matches("[Tt]hreshold.*")) {
+				s = s.replaceAll("[Tt]hreshold\\s*=(.*)", "$1").trim();
+				threshold = Double.parseDouble(s);
+				s = inputReader.readLine();
+				continue;
+			}
+
 			String[] split = s.split("=");
 			String left = split[1].trim();
 			String right = split[0].trim();
@@ -161,23 +171,6 @@ public class Main {
 			s = inputReader.readLine();
 		}
 		return new TabulatedFunctionFitness(targets);
-	}
-
-	private static double getThreshold(BufferedReader inputReader) throws Exception {
-		double threshold = 10;
-
-		try {
-			String s = inputReader.readLine();
-			while ((s.startsWith("#")) || (s.trim().isEmpty())) {
-				s = inputReader.readLine();
-			}
-			s = s.replaceAll("[Tt]hreshold\\s*=(.*)", "$1").trim();
-			threshold = Double.parseDouble(s);
-		} catch (Exception e) {
-			// ignored
-		}
-
-		return threshold;
 	}
 
 	private static void configureInputOutput(String[] args) throws FileNotFoundException {
