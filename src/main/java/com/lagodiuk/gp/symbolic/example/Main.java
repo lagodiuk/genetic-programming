@@ -136,7 +136,7 @@ public class Main {
 			s = inputReader.readLine();
 		}
 		int variablesCount = variables.size();
-		while ((s != null) && (!s.trim().isEmpty())) {
+		while (s != null) {
 			if ((s.startsWith("#")) || (s.trim().isEmpty())) {
 				s = inputReader.readLine();
 				continue;
