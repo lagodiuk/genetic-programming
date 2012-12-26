@@ -29,6 +29,13 @@ public class LauncherXYZ {
 						list("x", "y", "z"),
 						list(Functions.ADD, Functions.SUB, Functions.MUL, Functions.VARIABLE, Functions.CONSTANT));
 
+		addListener(engine);
+
+		engine.evolve(200);
+		System.out.println(engine.getBestSyntaxTree().print());
+	}
+
+	private static void addListener(SymbolicRegressionEngine engine) {
 		engine.addIterationListener(new SymbolicRegressionIterationListener() {
 			private double prevFitValue = -1;
 
@@ -46,9 +53,6 @@ public class LauncherXYZ {
 				}
 			}
 		});
-
-		engine.evolve(200);
-		System.out.println(engine.getBestSyntaxTree().print());
 	}
 
 	private static <T> List<T> list(T... items) {
