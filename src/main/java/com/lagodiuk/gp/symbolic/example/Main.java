@@ -5,11 +5,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import com.lagodiuk.gp.symbolic.SymbolicRegressionEngine;
@@ -21,6 +23,8 @@ import com.lagodiuk.gp.symbolic.interpreter.Function;
 import com.lagodiuk.gp.symbolic.interpreter.Functions;
 
 public class Main {
+
+	private static NumberFormat numberFormat = NumberFormat.getInstance(Locale.US);
 
 	private static FileInputStream fileIn;
 
@@ -147,7 +151,7 @@ public class Main {
 
 			if (s.matches("[Tt]hreshold.*")) {
 				s = s.replaceAll("[Tt]hreshold\\s*=(.*)", "$1").trim();
-				threshold = Double.parseDouble(s);
+				threshold = numberFormat.parse(s).doubleValue();
 				s = inputReader.readLine();
 				continue;
 			}
@@ -157,12 +161,12 @@ public class Main {
 			String right = split[0].trim();
 			right = right.replaceAll("f\\((.*)\\)", "$1");
 
-			double targetValue = Double.parseDouble(left);
+			double targetValue = numberFormat.parse(left).doubleValue();
 
 			String[] values = right.split("\\,");
 			Target target = new Target();
 			for (int i = 0; i < variablesCount; i++) {
-				double value = Double.parseDouble(values[i].trim());
+				double value = numberFormat.parse(values[i].trim()).doubleValue();
 				target.when(variables.get(i), value);
 			}
 			target.targetIs(targetValue);
