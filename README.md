@@ -6,7 +6,13 @@ More info in this [article](http://habrahabr.ru/post/163195/)
 
 This project depends on [Generic Genetic Algorithm project](https://github.com/lagodiuk/genetic-algorithm) (has a maven dependency)
 
-### try it ###
+## Usage ##
+
+### just download jar ###
+The most simple way is download <i>symbolic_regression_X.X.jar</i> from http://github.com/lagodiuk/genetic-programming/tree/master/bin
+and add it to your classpath 
+
+### try it with maven ###
 <ol>
 <li> git clone https://github.com/lagodiuk/genetic-algorithm.git </li>
 <li> git clone https://github.com/lagodiuk/genetic-programming.git </li>
@@ -43,9 +49,6 @@ import com.lagodiuk.gp.symbolic.interpreter.Functions;
 
 public class HelloSymbolicRegression {
 
-	/**
-	 * Modified example from book "Programming collective intelligence"
-	 */
 	public static void main(String[] args) {
 	
 		TabulatedFunctionFitness fitnessFunction =
@@ -71,18 +74,17 @@ public class HelloSymbolicRegression {
 
 	private static void addListener(SymbolicRegressionEngine engine) {
 		engine.addIterationListener(new SymbolicRegressionIterationListener() {
-	
-			private double prevFitValue = -1;
-
 			@Override
 			public void update(SymbolicRegressionEngine engine) {
+
 				Expression bestSyntaxTree = engine.getBestSyntaxTree();
+
 				double currFitValue = engine.fitness(bestSyntaxTree);
-				if (Double.compare(currFitValue, this.prevFitValue) != 0) {
-					System.out.println("Func = " + bestSyntaxTree.print());
-				}
-				System.out.println(String.format("%s \t %s", engine.getIteration(), currFitValue));
-				this.prevFitValue = currFitValue;
+
+				System.out.println(
+						String.format("iter = %s \t fit = %s \t func = %s",
+								engine.getIteration(), currFitValue, bestSyntaxTree.print()));
+
 				if (currFitValue < 5) {
 					engine.terminate();
 				}
