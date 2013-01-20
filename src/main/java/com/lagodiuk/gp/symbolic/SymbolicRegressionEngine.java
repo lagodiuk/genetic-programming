@@ -3,7 +3,7 @@ package com.lagodiuk.gp.symbolic;
 import java.util.Collection;
 import java.util.List;
 
-import com.lagodiuk.ga.Environment;
+import com.lagodiuk.ga.GeneticAlgorithm;
 import com.lagodiuk.ga.Fitness;
 import com.lagodiuk.ga.IterartionListener;
 import com.lagodiuk.ga.Population;
@@ -20,7 +20,7 @@ public class SymbolicRegressionEngine {
 
 	private static final int MAX_INITIAL_TREE_DEPTH = 1;
 
-	private Environment<GpChromosome, Double> environment;
+	private GeneticAlgorithm<GpChromosome, Double> environment;
 
 	private Context context;
 
@@ -31,7 +31,7 @@ public class SymbolicRegressionEngine {
 		this.expressionFitness = expressionFitness;
 		SymbolicRegressionFitness fitnessFunction = new SymbolicRegressionFitness(this.expressionFitness);
 		Population<GpChromosome> population = this.createPopulation(this.context, fitnessFunction, DEFAULT_POPULATION_SIZE);
-		this.environment = new Environment<GpChromosome, Double>(population, fitnessFunction);
+		this.environment = new GeneticAlgorithm<GpChromosome, Double>(population, fitnessFunction);
 		this.environment.setParentChromosomesSurviveCount(INITIAL_PARENT_CHROMOSOMES_SURVIVE_COUNT);
 	}
 
@@ -48,7 +48,7 @@ public class SymbolicRegressionEngine {
 	public void addIterationListener(final SymbolicRegressionIterationListener listener) {
 		this.environment.addIterationListener(new IterartionListener<GpChromosome, Double>() {
 			@Override
-			public void update(Environment<GpChromosome, Double> environment) {
+			public void update(GeneticAlgorithm<GpChromosome, Double> environment) {
 				listener.update(SymbolicRegressionEngine.this);
 			}
 		});

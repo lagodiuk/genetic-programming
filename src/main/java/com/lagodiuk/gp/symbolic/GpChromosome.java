@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.lagodiuk.ga.Chromosome;
-import com.lagodiuk.ga.Environment;
+import com.lagodiuk.ga.GeneticAlgorithm;
 import com.lagodiuk.ga.Fitness;
 import com.lagodiuk.ga.Population;
 import com.lagodiuk.gp.symbolic.interpreter.Context;
@@ -241,7 +241,7 @@ class GpChromosome implements Chromosome<GpChromosome> {
 
 			Fitness<CoefficientsChromosome, Double> fit = new CoefficientsFitness();
 
-			Environment<CoefficientsChromosome, Double> env = new Environment<GpChromosome.CoefficientsChromosome, Double>(population, fit);
+			GeneticAlgorithm<CoefficientsChromosome, Double> env = new GeneticAlgorithm<GpChromosome.CoefficientsChromosome, Double>(population, fit);
 
 			env.iterate(iterations);
 
