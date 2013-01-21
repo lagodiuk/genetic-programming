@@ -55,7 +55,7 @@ public class SymbolicRegressionEngine {
 	}
 
 	public void evolve(int itrationsCount) {
-		this.environment.iterate(itrationsCount);
+		this.environment.evolve(itrationsCount);
 	}
 
 	public Context getContext() {

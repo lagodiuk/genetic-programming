@@ -243,7 +243,7 @@ class GpChromosome implements Chromosome<GpChromosome> {
 
 			GeneticAlgorithm<CoefficientsChromosome, Double> env = new GeneticAlgorithm<GpChromosome.CoefficientsChromosome, Double>(population, fit);
 
-			env.iterate(iterations);
+			env.evolve(iterations);
 
 			List<Double> optimizedCoefficients = env.getBest().getCoefficients();
 
