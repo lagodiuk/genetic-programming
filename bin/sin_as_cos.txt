@@ -1,3 +1,18 @@
+#-------------------------------------------------------------------------------
+# Copyright 2012 Yuriy Lagodiuk
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+#   http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#-------------------------------------------------------------------------------
 # allowed functions are: ADD SUB MUL DIV SQRT POW LN SIN COS
 # set which functions to use:
 
@@ -9,6 +24,30 @@ f(x) - ?
 
 # define training set:
 
-f(-5) = 0.958924275f(-4.6) = 0.993691004f(-4.2) = 0.871575772f(-3.8) = 0.611857891f(-3.4) = 0.255541102f(-3) = -0.141120008f(-2.6) = -0.515501372f(-2.2) = -0.808496404f(-1.8) = -0.973847631f(-1.4) = -0.98544973f(-1) = -0.841470985f(-0.6) = -0.564642473f(-0.2) = -0.198669331f(0.2) = 0.198669331f(0.6) = 0.564642473f(1) = 0.841470985f(1.4) = 0.98544973f(1.8) = 0.973847631f(2.2) = 0.808496404f(2.6) = 0.515501372f(3) = 0.141120008f(3.4) = -0.255541102f(3.8) = -0.611857891f(4.2) = -0.871575772f(4.6) = -0.993691004
+f(-5) = 0.958924275
+f(-4.6) = 0.993691004
+f(-4.2) = 0.871575772
+f(-3.8) = 0.611857891
+f(-3.4) = 0.255541102
+f(-3) = -0.141120008
+f(-2.6) = -0.515501372
+f(-2.2) = -0.808496404
+f(-1.8) = -0.973847631
+f(-1.4) = -0.98544973
+f(-1) = -0.841470985
+f(-0.6) = -0.564642473
+f(-0.2) = -0.198669331
+f(0.2) = 0.198669331
+f(0.6) = 0.564642473
+f(1) = 0.841470985
+f(1.4) = 0.98544973
+f(1.8) = 0.973847631
+f(2.2) = 0.808496404
+f(2.6) = 0.515501372
+f(3) = 0.141120008
+f(3.4) = -0.255541102
+f(3.8) = -0.611857891
+f(4.2) = -0.871575772
+f(4.6) = -0.993691004
 
 threshold = 0.5
