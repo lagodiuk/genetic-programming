@@ -3,7 +3,7 @@ genetic-programming
 
 [Symbolic regression](http://en.wikipedia.org/wiki/Symbolic_regression) solver, based on [genetic programming](http://en.wikipedia.org/wiki/Genetic_programming) methodology.
 
-## Description ##
+# Description #
 
 Each mathematical expression can be represented in form of syntax tree: <br/>
 ![Syntax Tree Example](https://raw.githubusercontent.com/lagodiuk/genetic-programming/master/img/syntax_tree.png)
@@ -54,7 +54,15 @@ Blue line has smaller value of mean squared error, but, actually - green parabol
 By this reason, current implementation of Symbolic Regression Solver - uses second pass of Genetic Algorithm - for optimizing of coefficients of each syntax tree. On the picture below - represented the way, how coefficients of each syntax tree - could be transformed to "chromosome": <br/>
 ![Encoding coefficients of syntax tree into chromosome](https://raw.githubusercontent.com/lagodiuk/genetic-programming/master/img/optimize_coefficients_ga.png)
 
-## Example ##
+### Reducing complexity of syntax trees ###
+
+1. Simplification of subtrees, which contains only constant-valued: <br/>
+   ![](https://raw.githubusercontent.com/lagodiuk/genetic-programming/master/img/pruning_1.png)
+
+2. Pruning trees, which has height larger then threshold: <br/>
+   ![](https://raw.githubusercontent.com/lagodiuk/genetic-programming/master/img/pruning_2.png)
+
+# Example #
 
 Lets try to reconstruct original function, by following target values.
 
@@ -68,15 +76,16 @@ x     | y    | z    | f(x,y,z)
 33    | 11   | 2    | 1217
 37    | 16   | 7    | 1524
 
-This project depends on [Generic Genetic Algorithm project](https://github.com/lagodiuk/genetic-algorithm) (has a maven dependency)
+Below presented picture, which shows dynamics of changes of mean squared error, according to the best "evolved" syntax trees (the axis "x" - represents number of iteration): <br/>
+![Picture with dynamics of changes of mean squared error](https://raw.githubusercontent.com/lagodiuk/genetic-programming/master/img/examle_1.jpg)
 
-## Quick start ##
+# Quick start #
 
-### just download jar ###
+## just download jar ##
 The most simple way is download <i>symbolic_regression_X.X.jar</i> from http://github.com/lagodiuk/genetic-programming/tree/master/bin
 and add it to your classpath 
 
-### try it with maven ###
+## try it with maven ##
 <ol>
 <li> git clone https://github.com/lagodiuk/genetic-algorithm.git </li>
 <li> git clone https://github.com/lagodiuk/genetic-programming.git </li>
