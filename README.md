@@ -3,6 +3,20 @@ genetic-programming
 
 [Symbolic regression](http://en.wikipedia.org/wiki/Symbolic_regression) solver, based on [genetic programming](http://en.wikipedia.org/wiki/Genetic_programming) methodology.
 
+### Table of contents
+1. [Description](#description) <br/>
+1.1 [Crossover](#crossover) <br/>
+1.2 [Mutation](#mutation) <br/>
+1.3 [Optimization of coefficients](#optimization-of-coefficients) <br/>
+1.4 [Reducing complexity of syntax trees](#reducing-complexity-of-syntax-trees) <br/>
+2. [Example](#example) <br/>
+2.1 [f(x,y,z) - ?](#fxyz---) <br/>
+2.2 [Try it in command line](#try-it-in-command-line) <br/>
+3. [Quick start](#quick-start) <br/>
+3.1 [Just download jar](#just-download-jar) <br/>
+3.2 [Try it with Maven](#try-it-with-maven) <br/>
+3.3 [Hello world](#hello-world)
+
 # Description #
 
 Each mathematical expression can be represented in form of syntax tree: <br/>
@@ -99,7 +113,7 @@ Below presented picture, which shows dynamics of changes of mean squared error, 
    f(37, 16, 7) = 1524
    ```
    (this file can be downloaded from: https://github.com/lagodiuk/genetic-programming/blob/master/bin/xyz.txt)
-3. Launch: `java -jar symbolic_regression_1.0.jar xyz.txt`
+3. Launch: `java -jar symbolic_regression_1.0.jar xyz.txt` - and observe output for each iteration (output will be in format: iteration numbre, value of mean squared error, and evolved formula).
 
 # Quick start #
 
