@@ -54,7 +54,17 @@ Blue line has smaller value of mean squared error, but, actually - green parabol
 By this reason, current implementation of Symbolic Regression Solver - uses second pass of Genetic Algorithm - for optimizing of coefficients of each syntax tree. On the picture below - represented the way, how coefficients of each syntax tree - could be transformed to "chromosome": <br/>
 ![Encoding coefficients of syntax tree into chromosome](https://raw.githubusercontent.com/lagodiuk/genetic-programming/master/img/optimize_coefficients_ga.png)
 
-More info in this [article](http://habrahabr.ru/post/163195/) (article is in Russian language).
+## Example ##
+
+Lets try to reconstruct original function, by following target values:
+
+|x |y |z  |f(x,y,z)|
+|--|--|---|--------|
+|26|35|1  |830     |
+|8 |24|-11|130     |
+|20|1 |10 |477     |
+|33|11|2  |1217    |
+|37|16|7  |1524    |
 
 This project depends on [Generic Genetic Algorithm project](https://github.com/lagodiuk/genetic-algorithm) (has a maven dependency)
 
@@ -175,3 +185,4 @@ public class HelloSymbolicRegression {
 	}
 }
 ```
+Some additional information can be found in the following [article](http://habrahabr.ru/post/163195/) (in Russian language).
