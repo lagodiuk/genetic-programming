@@ -66,7 +66,7 @@ By this reason, current implementation of Symbolic Regression Solver - uses seco
 
 Lets try to reconstruct original function, by following target values.
 
-### f(x,y,z) - ? ###
+## f(x,y,z) - ? ##
 
 x     | y    | z    | f(x,y,z)
 ----  | ---- | ---- | -------
@@ -79,13 +79,37 @@ x     | y    | z    | f(x,y,z)
 Below presented picture, which shows dynamics of changes of mean squared error, according to the best "evolved" syntax trees (the axis "x" - represents number of iteration): <br/>
 ![Picture with dynamics of changes of mean squared error](https://raw.githubusercontent.com/lagodiuk/genetic-programming/master/img/examle_1.jpg)
 
+## Try it in command line ##
+
+1. Download http://github.com/lagodiuk/genetic-programming/tree/master/bin/symbolic_regression_1.0.jar
+2. Create file **xyz.txt** with following content:
+   ```txt
+   # allowed functions are: ADD SUB MUL DIV SQRT POW LN SIN COS
+   # set which functions to use:
+     ADD MUL SUB
+
+   # looking for:
+   f(x, y, z) — ?
+
+   # define training set:
+   f(26, 35, 1) = 830
+   f(8, 24, -11) = 130
+   f(20, 1, 10) = 477
+   f(33, 11, 2) = 1217
+   f(37, 16, 7) = 1524
+   ```
+   (this file can be downloaded from: https://github.com/lagodiuk/genetic-programming/blob/master/bin/xyz.txt)
+3. Launch: `java -jar symbolic_regression_1.0.jar xyz.txt`
+
 # Quick start #
 
 ## just download jar ##
-The most simple way is download <i>symbolic_regression_X.X.jar</i> from http://github.com/lagodiuk/genetic-programming/tree/master/bin
-and add it to your classpath 
+The most simple way is download http://github.com/lagodiuk/genetic-programming/tree/master/bin/symbolic_regression_1.0.jar and add it to your classpath.
 
 ## try it with maven ##
+
+This project depends on [Generic Genetic Algorithm project](https://github.com/lagodiuk/genetic-algorithm) (as a maven dependency).
+
 <ol>
 <li> git clone https://github.com/lagodiuk/genetic-algorithm.git </li>
 <li> git clone https://github.com/lagodiuk/genetic-programming.git </li>
