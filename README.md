@@ -9,7 +9,7 @@ genetic-programming
 1.2 [Mutation](#mutation) <br/>
 1.3 [Optimization of coefficients](#optimization-of-coefficients) <br/>
 1.4 [Reducing complexity of syntax trees](#reducing-complexity-of-syntax-trees) <br/>
-2. [Example](#example) <br/>
+2. [Demo](#demo) <br/>
 2.1 [f(x,y,z) - ?](#fxyz---) <br/>
 2.2 [Try it in command line](#try-it-in-command-line) <br/>
 3. [Quick start](#quick-start) <br/>
@@ -76,7 +76,7 @@ By this reason, current implementation of Symbolic Regression Solver - uses seco
 2. Pruning trees, which has height larger then threshold: <br/>
    ![](https://raw.githubusercontent.com/lagodiuk/genetic-programming/master/img/pruning_2.png)
 
-# Example #
+# Demo #
 
 Lets try to reconstruct original function, by following target values.
 
