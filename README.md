@@ -56,15 +56,17 @@ By this reason, current implementation of Symbolic Regression Solver - uses seco
 
 ## Example ##
 
-Lets try to reconstruct original function, by following target values:
+Lets try to reconstruct original function, by following target values.
 
-x  | y  | z   | f(x,y,z)
--- | -- | --  | --------
-26 | 35 | 1   | 830     
-8  | 24 | -11 | 130     
-20 | 1  | 10  | 477     
-33 | 11 | 2   | 1217    
-37 | 16 | 7   | 1524    
+### f(x,y,z) - ? ###
+
+x     | y    | z    | f(x,y,z)
+----  | ---- | ---- | -------
+26    | 35   | 1    | 830
+8     | 24   | -11  | 130
+20    | 1    | 10   | 477
+33    | 11   | 2    | 1217
+37    | 16   | 7    | 1524
 
 This project depends on [Generic Genetic Algorithm project](https://github.com/lagodiuk/genetic-algorithm) (has a maven dependency)
 
